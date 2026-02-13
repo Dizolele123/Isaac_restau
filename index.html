@@ -2,59 +2,95 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mariage de mon Frère - 21 Février</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5">
+    <title>💍 Mariage - Célébration d'Amour | 22 Février 2025</title>
+    
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Font Awesome 6 (icônes) -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Google Fonts - Plus élégant -->
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
     <style>
+        /* Variables de couleur - Palette Dorée Raffinée */
         :root {
-            --gold: #D4AF37;
-            --light-gold: #F4E4A6;
-            --dark-gold: #B8860B;
+            --gold: #C5A059;
+            --gold-light: #E5D3B0;
+            --gold-pale: #F8F0E0;
+            --ivory: #FFF9F0;
+            --cream: #FDF5E6;
+            --charcoal: #2C2C2C;
+            --taupe: #8A7F7A;
             --white: #FFFFFF;
-            --ivory: #FFFFF0;
-            --charcoal: #333333;
+            --shadow: rgba(197, 160, 89, 0.15);
         }
         
+        /* Base Styles */
         body {
             font-family: 'Montserrat', sans-serif;
-            background-color: var(--ivory);
+            background-color: var(--cream);
             color: var(--charcoal);
+            line-height: 1.6;
+            scroll-behavior: smooth;
         }
         
         .heading-font {
-            font-family: 'Playfair Display', serif;
+            font-family: 'Cormorant Garamond', serif;
+            letter-spacing: 1px;
         }
         
+        /* Effets dorés */
         .gold-gradient {
-            background: linear-gradient(135deg, var(--light-gold) 0%, var(--gold) 100%);
+            background: linear-gradient(145deg, var(--gold-light) 0%, var(--gold) 100%);
         }
         
         .gold-text {
             color: var(--gold);
         }
         
-        .border-gold {
-            border-color: var(--gold);
+        .gold-border {
+            border: 1px solid var(--gold);
         }
         
+        .gold-shadow {
+            box-shadow: 0 10px 30px var(--shadow);
+        }
+        
+        /* Boutons */
         .btn-gold {
             background-color: var(--gold);
-            color: var(--white);
-            transition: all 0.3s ease;
+            color: white;
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            position: relative;
+            overflow: hidden;
         }
         
         .btn-gold:hover {
-            background-color: var(--dark-gold);
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(180, 134, 11, 0.3);
+            background-color: #B38B4A;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(197, 160, 89, 0.4);
         }
         
+        .btn-outline-gold {
+            border: 2px solid var(--gold);
+            color: var(--gold);
+            transition: all 0.3s ease;
+        }
+        
+        .btn-outline-gold:hover {
+            background-color: var(--gold);
+            color: white;
+        }
+        
+        /* Titres de section */
         .section-title {
             position: relative;
-            padding-bottom: 15px;
-            margin-bottom: 30px;
+            padding-bottom: 20px;
+            margin-bottom: 50px;
+            font-size: 2.5rem;
         }
         
         .section-title:after {
@@ -63,468 +99,741 @@
             bottom: 0;
             left: 50%;
             transform: translateX(-50%);
-            width: 100px;
+            width: 80px;
             height: 3px;
-            background-color: var(--gold);
+            background: linear-gradient(90deg, transparent, var(--gold), transparent);
         }
         
-        .invitation-card {
-            background: var(--white);
-            border-radius: 10px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-            transition: transform 0.3s ease;
+        .section-title span {
+            position: relative;
+            display: inline-block;
         }
         
-        .invitation-card:hover {
-            transform: translateY(-5px);
+        .section-title span:before,
+        .section-title span:after {
+            content: '✦';
+            color: var(--gold);
+            font-size: 1.2rem;
+            margin: 0 15px;
+            opacity: 0.7;
         }
         
-        .table-number {
-            background-color: var(--gold);
-            color: var(--white);
-            width: 40px;
-            height: 40px;
+        /* Cartes élégantes */
+        .elegant-card {
+            background: white;
+            border-radius: 12px;
+            padding: 30px 20px;
+            transition: all 0.4s ease;
+            border: 1px solid rgba(197, 160, 89, 0.1);
+            position: relative;
+        }
+        
+        .elegant-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px var(--shadow);
+            border-color: var(--gold-light);
+        }
+        
+        .elegant-card:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 3px;
+            background: var(--gold);
+            transition: width 0.4s ease;
+        }
+        
+        .elegant-card:hover:before {
+            width: 80px;
+        }
+        
+        /* Numéro de table */
+        .table-badge {
+            background: linear-gradient(145deg, var(--gold), #B38B4A);
+            color: white;
+            width: 60px;
+            height: 60px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-weight: 600;
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin: 0 auto;
+            box-shadow: 0 5px 15px rgba(197, 160, 89, 0.3);
+            border: 3px solid white;
         }
         
-        .search-result {
-            animation: fadeIn 0.5s ease;
+        /* Animation */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
         
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
+        .fade-in-up {
+            animation: fadeInUp 0.8s ease forwards;
         }
         
-        .photo-gallery img {
-            transition: transform 0.3s ease;
-        }
-        
-        .photo-gallery img:hover {
-            transform: scale(1.05);
-        }
-        
+        /* Hero Section avec vos photos */
         .hero-section {
-            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://images.unsplash.com/photo-1519741497674-611481863552?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80');
+            position: relative;
+            background: linear-gradient(rgba(0, 0, 0, 0.65), rgba(0, 0, 0, 0.65)), url('assets/images/i1.jpg');
             background-size: cover;
             background-position: center;
-            color: var(--white);
+            background-attachment: fixed;
+            color: white;
+            overflow: hidden;
         }
         
-        .auth-modal {
-            background-color: rgba(0, 0, 0, 0.8);
-            position: fixed;
+        .hero-section:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 100px;
+            background: linear-gradient(to top, var(--cream), transparent);
+        }
+        
+        /* Images avec overlay doré */
+        .image-frame {
+            position: relative;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+        }
+        
+        .image-frame:after {
+            content: '';
+            position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
+            background: linear-gradient(145deg, rgba(197, 160, 89, 0.1), rgba(197, 160, 89, 0));
+            pointer-events: none;
+        }
+        
+        .image-frame img {
+            transition: transform 0.8s cubic-bezier(0.165, 0.84, 0.44, 1);
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .image-frame:hover img {
+            transform: scale(1.1);
+        }
+        
+        /* Timeline */
+        .timeline-dot {
+            width: 50px;
+            height: 50px;
+            background: white;
+            border: 3px solid var(--gold);
+            border-radius: 50%;
             display: flex;
-            justify-content: center;
             align-items: center;
-            z-index: 1000;
+            justify-content: center;
+            color: var(--gold);
+            font-size: 1.2rem;
+            box-shadow: 0 0 0 5px rgba(197, 160, 89, 0.1);
         }
         
-        .login-form {
-            background-color: var(--white);
-            border-radius: 15px;
-            width: 90%;
-            max-width: 500px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+        /* Modal Auth */
+        .auth-modal {
+            background: rgba(44, 44, 44, 0.95);
+            backdrop-filter: blur(10px);
         }
         
+        /* Admin Panel */
         .admin-panel {
-            background-color: rgba(255, 255, 255, 0.95);
-            border-left: 5px solid var(--gold);
+            background: white;
+            border-radius: 20px;
+            border: 1px solid var(--gold-light);
+            box-shadow: 0 20px 40px rgba(197, 160, 89, 0.1);
         }
         
-        .hidden {
-            display: none !important;
+        /* Animations au scroll */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease;
+        }
+        
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .section-title {
+                font-size: 2rem;
+            }
+            
+            .section-title span:before,
+            .section-title span:after {
+                display: none;
+            }
         }
     </style>
 </head>
-<body class="bg-ivory">
-    <!-- Modal d'authentification (caché par défaut) -->
-    <div id="authModal" class="auth-modal hidden">
-        <div class="login-form p-8">
-            <div class="text-center mb-8">
-                <div class="w-16 h-16 gold-gradient rounded-full mx-auto mb-4 flex items-center justify-center">
+<body class="antialiased">
+
+    <!-- ===== MODAL D'AUTHENTIFICATION ===== -->
+    <div id="authModal" class="auth-modal hidden fixed inset-0 z-[100] flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-md w-full p-8 relative gold-shadow">
+            <div class="absolute -top-6 left-1/2 transform -translate-x-1/2">
+                <div class="w-16 h-16 gold-gradient rounded-full flex items-center justify-center shadow-lg">
                     <i class="fas fa-lock text-white text-2xl"></i>
                 </div>
-                <h2 class="heading-font text-2xl font-bold">Accès Réservé</h2>
-                <p class="text-gray-600 mt-2">Authentification requise pour accéder au système de vérification</p>
             </div>
             
-            <form id="loginForm">
-                <div class="mb-6">
-                    <label for="username" class="block text-gray-700 mb-2">Nom d'utilisateur</label>
-                    <input type="text" id="username" class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gold" placeholder="Entrez le nom d'utilisateur" required>
+            <div class="text-center mt-6 mb-8">
+                <h3 class="heading-font text-3xl font-bold text-gray-800 mb-2">Accès Privé</h3>
+                <p class="text-gray-500">Espace réservé aux organisateurs</p>
+                <div class="w-16 h-0.5 bg-gradient-to-r from-transparent via-gold to-transparent mx-auto mt-4"></div>
+            </div>
+            
+            <form id="loginForm" class="space-y-6">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">
+                        <i class="fas fa-user text-gold mr-2"></i>Identifiant
+                    </label>
+                    <input type="text" id="username" 
+                           class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-gold focus:border-transparent transition"
+                           placeholder="Entrez votre identifiant"
+                           required>
                 </div>
                 
-                <div class="mb-8">
-                    <label for="password" class="block text-gray-700 mb-2">Mot de passe</label>
-                    <input type="password" id="password" class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gold" placeholder="Entrez le mot de passe" required>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">
+                        <i class="fas fa-lock text-gold mr-2"></i>Mot de passe
+                    </label>
+                    <input type="password" id="password" 
+                           class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-gold focus:border-transparent transition"
+                           placeholder="Entrez votre mot de passe"
+                           required>
                 </div>
                 
-                <div id="loginError" class="hidden p-3 bg-red-50 border border-red-200 rounded-lg text-red-700 mb-6">
+                <div id="loginError" class="hidden bg-red-50 border border-red-200 rounded-lg p-4 text-red-600 text-sm">
                     <i class="fas fa-exclamation-circle mr-2"></i>
                     <span id="errorMessageText">Identifiants incorrects</span>
                 </div>
                 
-                <div class="flex flex-col md:flex-row gap-4">
-                    <button type="submit" class="btn-gold px-6 py-3 rounded-lg font-medium flex-grow">
-                        <i class="fas fa-sign-in-alt mr-2"></i> Se connecter
+                <div class="flex flex-col sm:flex-row gap-4 pt-4">
+                    <button type="submit" class="btn-gold flex-1 px-6 py-3 rounded-lg font-semibold">
+                        <i class="fas fa-sign-in-alt mr-2"></i>Se connecter
                     </button>
-                    <button type="button" id="cancelLogin" class="px-6 py-3 border border-gray-300 rounded-lg font-medium">
+                    <button type="button" id="cancelLogin" 
+                            class="flex-1 px-6 py-3 border-2 border-gray-200 rounded-lg font-semibold text-gray-600 hover:border-gray-300 transition">
                         Annuler
                     </button>
                 </div>
             </form>
             
-            <div class="mt-8 pt-6 border-t border-gray-200 text-center text-sm text-gray-500">
-                <p><i class="fas fa-info-circle mr-1"></i> Seuls les membres de l'organisation peuvent accéder à cette section</p>
+            <div class="mt-6 pt-6 border-t border-gray-100 text-center">
+                <p class="text-xs text-gray-400">
+                    <i class="fas fa-shield-alt mr-1"></i>
+                    Organisation du mariage uniquement
+                </p>
             </div>
         </div>
     </div>
 
-    <!-- Header et Navigation -->
-    <header class="sticky top-0 z-50 shadow-md">
-        <nav class="bg-white py-4">
-            <div class="container mx-auto px-4 flex justify-between items-center">
-                <div class="flex items-center">
-                    <div class="w-10 h-10 gold-gradient rounded-full mr-3"></div>
-                    <h1 class="heading-font text-2xl gold-text font-bold">Mariage<span class="text-charcoal">21</span></h1>
-                </div>
-                <div class="hidden md:flex space-x-8">
-                    <a href="#accueil" class="text-charcoal hover:gold-text font-medium transition duration-300">Accueil</a>
-                    <a href="#programme" class="text-charcoal hover:gold-text font-medium transition duration-300">Programme</a>
-                    <a href="#invites" class="text-charcoal hover:gold-text font-medium transition duration-300">Vérification Invités</a>
-                    <a href="#galerie" class="text-charcoal hover:gold-text font-medium transition duration-300">Galerie</a>
-                    <button id="adminAccessBtn" class="text-charcoal hover:gold-text font-medium transition duration-300">
-                        <i class="fas fa-user-shield mr-1"></i> Accès Organisateur
+    <!-- ===== NAVIGATION ===== -->
+    <nav class="fixed top-0 left-0 w-full z-50 bg-white/95 backdrop-blur-sm shadow-sm">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex justify-between items-center">
+                <!-- Logo -->
+                <a href="#accueil" class="flex items-center space-x-3 group">
+                    <div class="w-10 h-10 gold-gradient rounded-full flex items-center justify-center transform group-hover:scale-110 transition">
+                        <i class="fas fa-heart text-white text-sm"></i>
+                    </div>
+                    <span class="heading-font text-xl font-bold">
+                        <span class="gold-text">Mariage</span>
+                        <span class="text-gray-800">2025</span>
+                    </span>
+                </a>
+                
+                <!-- Menu Desktop -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#accueil" class="text-gray-600 hover:text-gold transition font-medium">Accueil</a>
+                    <a href="#programme" class="text-gray-600 hover:text-gold transition font-medium">Programme</a>
+                    <a href="#galerie" class="text-gray-600 hover:text-gold transition font-medium">Galerie</a>
+                    <a href="#invites" class="text-gray-600 hover:text-gold transition font-medium">Invités</a>
+                    <button id="adminAccessBtn" class="btn-outline-gold px-5 py-2 rounded-full text-sm font-semibold">
+                        <i class="fas fa-user-shield mr-2"></i>Organisateurs
                     </button>
                 </div>
-                <div class="md:hidden">
-                    <button id="menu-toggle" class="text-charcoal">
-                        <i class="fas fa-bars text-2xl"></i>
-                    </button>
-                </div>
-            </div>
-            <!-- Menu mobile -->
-            <div id="mobile-menu" class="hidden md:hidden bg-white py-4 px-4 shadow-lg">
-                <a href="#accueil" class="block py-2 text-charcoal hover:gold-text">Accueil</a>
-                <a href="#programme" class="block py-2 text-charcoal hover:gold-text">Programme</a>
-                <a href="#invites" class="block py-2 text-charcoal hover:gold-text">Vérification Invités</a>
-                <a href="#galerie" class="block py-2 text-charcoal hover:gold-text">Galerie</a>
-                <button id="adminAccessBtnMobile" class="block w-full text-left py-2 text-charcoal hover:gold-text">
-                    <i class="fas fa-user-shield mr-1"></i> Accès Organisateur
+                
+                <!-- Menu Mobile Button -->
+                <button id="menu-toggle" class="md:hidden text-2xl text-gray-600">
+                    <i class="fas fa-bars"></i>
                 </button>
             </div>
-        </nav>
-    </header>
-
-    <!-- Section Hero -->
-    <section id="accueil" class="hero-section py-20 text-center">
-        <div class="container mx-auto px-4">
-            <div class="max-w-4xl mx-auto">
-                <h2 class="heading-font text-4xl md:text-6xl font-bold mb-6">Célébrons l'Amour</h2>
-                <div class="w-24 h-1 bg-white mx-auto mb-8"></div>
-                <h3 class="text-2xl md:text-3xl font-light mb-8">Mariage de mon frère & sa bien-aimée</h3>
-                <p class="text-xl mb-10">Le 21 Février 2025 • Cérémonie à 14h</p>
-                <div class="flex flex-col md:flex-row justify-center items-center space-y-4 md:space-y-0 md:space-x-8">
-                    <div class="text-center">
-                        <div class="text-3xl font-bold gold-text">22</div>
-                        <div class="text-sm">Février</div>
-                    </div>
-                    <div class="text-center">
-                        <div class="text-3xl font-bold gold-text">14:00</div>
-                        <div class="text-sm">Heure</div>
-                    </div>
-                    <div class="text-center">
-                        <div class="text-3xl font-bold gold-text">Grand Hôtel</div>
-                        <div class="text-sm">Lieu de réception</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Section Description -->
-    <section class="py-16 bg-white">
-        <div class="container mx-auto px-4">
-            <h2 class="section-title heading-font text-3xl text-center">Une Célébration d'Amour</h2>
-            <div class="max-w-3xl mx-auto">
-                <p class="text-lg text-center mb-8">
-                    Nous sommes ravis de célébrer l'union de mon frère et de sa belle âme sœur. 
-                    Cette journée spéciale marquera le début de leur nouveau voyage ensemble, entourés de famille et d'amis.
-                </p>
-                <div class="grid md:grid-cols-3 gap-8 text-center mt-12">
-                    <div class="p-6 invitation-card">
-                        <div class="text-4xl gold-text mb-4"><i class="fas fa-heart"></i></div>
-                        <h3 class="heading-font text-xl font-bold mb-2">Cérémonie</h3>
-                        <p>Échange des vœux et union sacrée devant Dieu et la famille.</p>
-                    </div>
-                    <div class="p-6 invitation-card">
-                        <div class="text-4xl gold-text mb-4"><i class="fas fa-glass-cheers"></i></div>
-                        <h3 class="heading-font text-xl font-bold mb-2">Réception</h3>
-                        <p>Cocktail, dîner et célébration dans la joie et la convivialité.</p>
-                    </div>
-                    <div class="p-6 invitation-card">
-                        <div class="text-4xl gold-text mb-4"><i class="fas fa-music"></i></div>
-                        <h3 class="heading-font text-xl font-bold mb-2">Soirée Dansante</h3>
-                        <p>Musique, danse et festivités jusqu'au bout de la nuit.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Section Programme -->
-    <section id="programme" class="py-16 bg-ivory">
-        <div class="container mx-auto px-4">
-            <h2 class="section-title heading-font text-3xl text-center">Programme de la Journée</h2>
-            <div class="max-w-4xl mx-auto">
-                <div class="relative">
-                    <!-- Ligne centrale -->
-                    <div class="hidden md:block absolute left-1/2 transform -translate-x-1/2 h-full w-1 gold-gradient"></div>
-                    
-                    <!-- Événement 1 -->
-                    <div class="flex flex-col md:flex-row items-center mb-12">
-                        <div class="md:w-1/2 md:pr-12 mb-6 md:mb-0 md:text-right">
-                            <h3 class="heading-font text-2xl font-bold mb-2">Cérémonie Religieuse</h3>
-                            <p class="gold-text font-medium mb-2">14:00 - 15:30</p>
-                            <p>Église Saint-Pierre, Centre-ville</p>
-                        </div>
-                        <div class="w-10 h-10 rounded-full gold-gradient flex items-center justify-center z-10">
-                            <div class="w-6 h-6 bg-white rounded-full"></div>
-                        </div>
-                        <div class="md:w-1/2 md:pl-12 mt-6 md:mt-0">
-                            <!-- Image placeholder -->
-                            <div class="bg-gray-300 h-48 rounded-lg flex items-center justify-center">
-                                <span class="text-gray-500">Photo de cérémonie</span>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Événement 2 -->
-                    <div class="flex flex-col md:flex-row items-center mb-12">
-                        <div class="md:w-1/2 md:pr-12 mb-6 md:mb-0 order-2 md:order-1">
-                            <!-- Image placeholder -->
-                            <div class="bg-gray-300 h-48 rounded-lg flex items-center justify-center">
-                                <span class="text-gray-500">Photo cocktail</span>
-                            </div>
-                        </div>
-                        <div class="w-10 h-10 rounded-full gold-gradient flex items-center justify-center z-10 order-1 md:order-2">
-                            <div class="w-6 h-6 bg-white rounded-full"></div>
-                        </div>
-                        <div class="md:w-1/2 md:pl-12 mt-6 md:mt-0 order-3 md:order-3 md:text-left">
-                            <h3 class="heading-font text-2xl font-bold mb-2">Cocktail & Photos</h3>
-                            <p class="gold-text font-medium mb-2">16:00 - 17:30</p>
-                            <p>Jardin du Grand Hôtel</p>
-                        </div>
-                    </div>
-                    
-                    <!-- Événement 3 -->
-                    <div class="flex flex-col md:flex-row items-center">
-                        <div class="md:w-1/2 md:pr-12 mb-6 md:mb-0 md:text-right">
-                            <h3 class="heading-font text-2xl font-bold mb-2">Dîner & Soirée Dansante</h3>
-                            <p class="gold-text font-medium mb-2">18:00 - Minuit</p>
-                            <p>Salle des Fêtes, Grand Hôtel</p>
-                        </div>
-                        <div class="w-10 h-10 rounded-full gold-gradient flex items-center justify-center z-10">
-                            <div class="w-6 h-6 bg-white rounded-full"></div>
-                        </div>
-                        <div class="md:w-1/2 md:pl-12 mt-6 md:mt-0">
-                            <!-- Image placeholder -->
-                            <div class="bg-gray-300 h-48 rounded-lg flex items-center justify-center">
-                                <span class="text-gray-500">Photo réception</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Section Vérification des Invités (Réservée aux organisateurs) -->
-    <section id="invites" class="py-16 bg-white">
-        <div class="container mx-auto px-4">
-            <h2 class="section-title heading-font text-3xl text-center">Vérification des Invités</h2>
             
-            <!-- Message pour les visiteurs non authentifiés -->
-            <div id="guestMessage" class="max-w-2xl mx-auto text-center">
-                <div class="bg-ivory p-8 rounded-lg shadow-md">
-                    <div class="text-5xl gold-text mb-6">
-                        <i class="fas fa-user-check"></i>
+            <!-- Menu Mobile -->
+            <div id="mobile-menu" class="hidden md:hidden mt-4 bg-white rounded-lg shadow-lg p-4">
+                <div class="flex flex-col space-y-3">
+                    <a href="#accueil" class="py-2 px-4 text-gray-600 hover:bg-gold-pale rounded-lg">Accueil</a>
+                    <a href="#programme" class="py-2 px-4 text-gray-600 hover:bg-gold-pale rounded-lg">Programme</a>
+                    <a href="#galerie" class="py-2 px-4 text-gray-600 hover:bg-gold-pale rounded-lg">Galerie</a>
+                    <a href="#invites" class="py-2 px-4 text-gray-600 hover:bg-gold-pale rounded-lg">Invités</a>
+                    <button id="adminAccessBtnMobile" class="btn-gold px-4 py-2 rounded-lg text-white font-medium">
+                        <i class="fas fa-user-shield mr-2"></i>Accès Organisateurs
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <div class="h-20"></div> <!-- Espace pour la navbar fixe -->
+
+    <!-- ===== HERO SECTION ===== -->
+    <section id="accueil" class="hero-section relative min-h-screen flex items-center justify-center">
+        <div class="container mx-auto px-6 py-24 text-center relative z-10">
+            <div class="max-w-4xl mx-auto fade-in-up">
+                <div class="inline-block px-6 py-2 bg-white/10 backdrop-blur-sm rounded-full border border-white/20 mb-8">
+                    <span class="text-gold-light tracking-wider">✦ 22 FÉVRIER 2025 ✦</span>
+                </div>
+                
+                <h1 class="heading-font text-6xl md:text-7xl lg:text-8xl font-bold mb-6 leading-tight">
+                    Célébrons
+                    <span class="block gold-text">l'Amour</span>
+                </h1>
+                
+                <div class="w-24 h-1 bg-gold mx-auto mb-8"></div>
+                
+                <p class="text-xl md:text-2xl text-gray-200 mb-12 font-light">
+                   Bienvenue au Mariage de Suadrick Fharguet et Deo-Gracias
+                </p>
+                
+                <div class="flex flex-col sm:flex-row justify-center items-center gap-6">
+                    <div class="bg-white/10 backdrop-blur-sm rounded-lg px-8 py-4 border border-white/20">
+                        <div class="text-3xl font-bold gold-text">14:00</div>
+                        <div class="text-sm text-gray-300">Cérémonie</div>
                     </div>
-                    <h3 class="heading-font text-2xl font-bold mb-4">Accès Réservé aux Organisateurs</h3>
-                    <p class="text-lg mb-6">
-                        La vérification des invités est effectuée par les membres de l'organisation du mariage.
-                        Si vous êtes un invité, veuillez vous adresser à l'accueil pour confirmer votre présence.
+                    <div class="bg-white/10 backdrop-blur-sm rounded-lg px-8 py-4 border border-white/20">
+                        <div class="text-3xl font-bold gold-text">Espace SONY LABOUTONSSY</div>
+                        <div class="text-sm text-gray-300">Lieu de réception</div>
+                    </div>
+                </div>
+                
+                <div class="mt-16">
+                    <a href="#programme" class="inline-flex items-center text-white hover:text-gold transition">
+                        <span class="mr-2">Découvrir le programme</span>
+                        <i class="fas fa-arrow-down"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== SECTION DESCRIPTION ===== -->
+    <section class="py-24 bg-cream">
+        <div class="container mx-auto px-6">
+            <h2 class="section-title heading-font text-center reveal">
+                <span>Une Histoire d'Amour</span>
+            </h2>
+            
+            <div class="max-w-3xl mx-auto text-center reveal">
+                <p class="text-lg md:text-xl text-gray-600 mb-12 leading-relaxed">
+                    Nous sommes réunis aujourd'hui pour célébrer l'union de deux âmes sœurs. 
+                    Que ce jour reste gravé dans nos mémoires comme le début d'un magnifique voyage.
+                </p>
+            </div>
+            
+            <!-- Cartes des moments clés -->
+            <div class="grid md:grid-cols-3 gap-8 mt-16">
+                <div class="elegant-card text-center reveal">
+                    <div class="text-4xl gold-text mb-4">
+                        <i class="fas fa-heart"></i>
+                    </div>
+                    <h3 class="heading-font text-xl font-bold mb-3">Mariage religieux</h3>
+                    <p class="text-gray-600">L'union sacrée dans la plus pure tradition</p>
+                    <div class="mt-4 text-sm gold-text">12h00 - Église EBNM KCC, Moukoundo rue TANKANA</div>
+                </div>
+                
+                <div class="elegant-card text-center reveal">
+                    <div class="text-4xl gold-text mb-4">
+                        <i class="fas fa-glass-cheers"></i>
+                    </div>
+                    <h3 class="heading-font text-xl font-bold mb-3">Mariage officielle</h3>
+                    <p class="text-gray-600">Celebration officielle à la mairie</p>
+                    <div class="mt-4 text-sm gold-text">09h00 - Mairie de M'filou</div>
+                </div>
+                
+                <div class="elegant-card text-center reveal">
+                    <div class="text-4xl gold-text mb-4">
+                        <i class="fas fa-music"></i>
+                    </div>
+                    <h3 class="heading-font text-xl font-bold mb-3">Dinner</h3>
+                    <p class="text-gray-600">Danse et festivités jusqu'au bout de la nuit</p>
+                    <div class="mt-4 text-sm gold-text">18h00 - Sony LABOUTANSSY</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== SECTION PROGRAMME ===== -->
+    <section id="programme" class="py-24 bg-white">
+        <div class="container mx-auto px-6">
+            <h2 class="section-title heading-font text-center reveal">
+                <span>Programme de la Journée</span>
+            </h2>
+            
+            <div class="max-w-5xl mx-auto mt-16">
+                <!-- Timeline avec VOS PHOTOS -->
+                
+                <!-- Événement 1 - Cérémonie -->
+                <div class="flex flex-col md:flex-row items-center gap-8 mb-16 reveal">
+                    <div class="md:w-1/2 md:text-right order-2 md:order-1">
+                        <div class="inline-block px-4 py-1 bg-gold-pale rounded-full text-gold text-sm mb-3">
+                            <i class="fas fa-clock mr-1"></i> 12h00 - 15h30
+                        </div>
+                        <h3 class="heading-font text-3xl font-bold mb-4">Cérémonie Religieuse</h3>
+                        <p class="text-gray-600 mb-4">
+                            Un moment solennel et émouvant où notre famille s'agrandit.
+                        </p>
+                        <div class="flex items-center justify-end gap-2 text-gold">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>Église EBNM KCC, Moukondo Rue TANKANA</span>
+                        </div>
+                    </div>
+                    
+                    <div class="md:w-1/2 order-1 md:order-2">
+                        <div class="image-frame aspect-[4/3]">
+                            <!-- VOTRE PHOTO i1.jpg pour la cérémonie -->
+                            <img src="assets/images/i1.jpg" alt="Cérémonie de mariage" class="w-full h-full object-cover">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent"></div>
+                            <div class="absolute bottom-4 left-4 text-white">
+                                <div class="flex items-center gap-2">
+                                    <div class="w-10 h-10 bg-white/20 backdrop-blur rounded-full flex items-center justify-center">
+                                        <i class="fas fa-heart text-gold"></i>
+                                    </div>
+                                    <span class="font-semibold">L'union sacrée</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Événement 2 - Cocktail -->
+                <div class="flex flex-col md:flex-row items-center gap-8 mb-16 reveal">
+                    <div class="md:w-1/2">
+                        <div class="image-frame aspect-[4/3]">
+                            <!-- VOTRE PHOTO i2.jpg pour le cocktail -->
+                            <img src="assets/images/i2.jpg" alt="Cocktail de mariage" class="w-full h-full object-cover">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent"></div>
+                            <div class="absolute bottom-4 left-4 text-white">
+                                <div class="flex items-center gap-2">
+                                    <div class="w-10 h-10 bg-white/20 backdrop-blur rounded-full flex items-center justify-center">
+                                        <i class="fas fa-champagne-glasses text-gold"></i>
+                                    </div>
+                                    <span class="font-semibold">Cocktail & convivialité</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="md:w-1/2 md:pl-12">
+                        <div class="inline-block px-4 py-1 bg-gold-pale rounded-full text-gold text-sm mb-3">
+                            <i class="fas fa-clock mr-1"></i> 16h00 - 17h30
+                        </div>
+                        <h3 class="heading-font text-3xl font-bold mb-4">Cocktail & Photos</h3>
+                        <p class="text-gray-600 mb-4">
+                            Un moment de partage autour de délicieuses gourmandises et de photos souvenirs.
+                        </p>
+                        <div class="flex items-center gap-2 text-gold">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>Espace SONY LABOUTANSSY</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Événement 3 - Dîner & Soirée -->
+                <div class="flex flex-col md:flex-row items-center gap-8 reveal">
+                    <div class="md:w-1/2 md:text-right order-2 md:order-1">
+                        <div class="inline-block px-4 py-1 bg-gold-pale rounded-full text-gold text-sm mb-3">
+                            <i class="fas fa-clock mr-1"></i> 18h00 - 21h00
+                        </div>
+                        <h3 class="heading-font text-3xl font-bold mb-4">Dîner & Soirée Dansante</h3>
+                        <p class="text-gray-600 mb-4">
+                            Un dîner raffiné suivi d'une soirée festive jusqu'au bout de la nuit.
+                        </p>
+                        <div class="flex items-center justify-end gap-2 text-gold">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>Salle des Fêtes, SONY LABOUTANSSY</span>
+                        </div>
+                    </div>
+                    
+                    <div class="md:w-1/2 order-1 md:order-2">
+                        <div class="image-frame aspect-[4/3]">
+                            <!-- VOTRE PHOTO i1.jpg pour la soirée -->
+                            <img src="assets/images/i1.jpg" alt="Dîner et soirée dansante" class="w-full h-full object-cover">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent"></div>
+                            <div class="absolute bottom-4 left-4 text-white">
+                                <div class="flex items-center gap-2">
+                                    <div class="w-10 h-10 bg-white/20 backdrop-blur rounded-full flex items-center justify-center">
+                                        <i class="fas fa-music text-gold"></i>
+                                    </div>
+                                    <span class="font-semibold">Soirée de fête</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== SECTION GALERIE ===== -->
+    <section id="galerie" class="py-24 bg-ivory">
+        <div class="container mx-auto px-6">
+            <h2 class="section-title heading-font text-center reveal">
+                <span>Galerie Souvenir</span>
+            </h2>
+            
+            <p class="text-center text-gray-600 mb-16 max-w-2xl mx-auto reveal">
+                Quelques instants précieux capturés avant ce grand jour.
+            </p>
+            
+            <div class="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+                <!-- Photo 1 - i1.jpg -->
+                <div class="group relative reveal">
+                    <div class="image-frame aspect-square">
+                        <img src="assets/images/i1.jpg" alt="Photo de couple 1" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                        <div class="absolute bottom-4 left-4 text-white transform translate-y-4 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition-all duration-500">
+                            <div class="flex items-center gap-2">
+                                <i class="fas fa-heart text-gold"></i>
+                                <span class="font-semibold">Moment de bonheur</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Photo 2 - i2.jpg -->
+                <div class="group relative reveal">
+                    <div class="image-frame aspect-square">
+                        <img src="assets/images/i2.jpg" alt="Photo de couple 2" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                        <div class="absolute bottom-4 left-4 text-white transform translate-y-4 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition-all duration-500">
+                            <div class="flex items-center gap-2">
+                                <i class="fas fa-heart text-gold"></i>
+                                <span class="font-semibold">Amour éternel</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Photo 3 - i1.jpg (réutilisation) -->
+                <div class="group relative reveal md:col-span-2 max-w-2xl mx-auto">
+                    <div class="image-frame aspect-video">
+                        <img src="assets/images/i1.jpg" alt="Photo de couple 3" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                        <div class="absolute bottom-4 left-4 text-white transform translate-y-4 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition-all duration-500">
+                            <div class="flex items-center gap-2">
+                                <i class="fas fa-heart text-gold"></i>
+                                <span class="font-semibold">Jour de fête</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-12 reveal">
+                <p class="text-gray-500 italic">
+                    "L'amour est la plus belle des histoires"
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== SECTION VÉRIFICATION DES INVITÉS ===== -->
+    <section id="invites" class="py-24 bg-white">
+        <div class="container mx-auto px-6">
+            <h2 class="section-title heading-font text-center reveal">
+                <span>Vérification des Invités</span>
+            </h2>
+            
+            <!-- Message public (non authentifié) -->
+            <div id="guestMessage" class="max-w-3xl mx-auto reveal">
+                <div class="bg-gradient-to-br from-gold-pale to-cream rounded-3xl p-12 text-center gold-shadow">
+                    <div class="w-24 h-24 bg-white rounded-full flex items-center justify-center mx-auto mb-8 shadow-lg">
+                        <i class="fas fa-user-check text-4xl gold-text"></i>
+                    </div>
+                    
+                    <h3 class="heading-font text-3xl font-bold mb-4">Espace Réservé</h3>
+                    
+                    <div class="w-20 h-1 bg-gold mx-auto mb-6"></div>
+                    
+                    <p class="text-lg text-gray-700 mb-8 leading-relaxed">
+                        La vérification des invités est gérée par l'équipe d'organisation.<br>
+                        Merci de vous présenter au bureau d'accueil à votre arrivée.
                     </p>
-                    <div class="flex flex-col md:flex-row justify-center gap-4">
-                        <button id="accessVerificationBtn" class="btn-gold px-6 py-3 rounded-lg font-medium">
-                            <i class="fas fa-user-shield mr-2"></i> Accès Organisateur
+                    
+                    <div class="flex flex-col sm:flex-row justify-center gap-4">
+                        <button id="accessVerificationBtn" class="btn-gold px-8 py-4 rounded-full font-semibold inline-flex items-center justify-center">
+                            <i class="fas fa-user-shield mr-2"></i>
+                            Accès organisateurs
                         </button>
-                        <a href="#programme" class="px-6 py-3 border border-gray-300 rounded-lg font-medium">
-                            <i class="fas fa-calendar-alt mr-2"></i> Voir le Programme
+                        <a href="#programme" class="btn-outline-gold px-8 py-4 rounded-full font-semibold inline-flex items-center justify-center">
+                            <i class="fas fa-calendar-alt mr-2"></i>
+                            Voir le programme
                         </a>
                     </div>
-                </div>
-            </div>
-            
-            <!-- Interface de vérification (cachée par défaut) -->
-            <div id="verificationInterface" class="hidden max-w-4xl mx-auto">
-                <p class="text-center text-lg mb-10 max-w-2xl mx-auto">
-                    Veuillez rechercher un nom pour confirmer l'invitation et connaître le numéro de table.
-                </p>
-                
-                <div class="bg-ivory p-8 rounded-lg shadow-md mb-10">
-                    <div class="flex justify-between items-center mb-6">
-                        <h3 class="heading-font text-2xl font-bold">Rechercher un invité</h3>
-                        <button id="logoutBtn" class="text-sm text-gray-500 hover:text-red-600">
-                            <i class="fas fa-sign-out-alt mr-1"></i> Déconnexion
-                        </button>
-                    </div>
                     
-                    <div class="flex flex-col md:flex-row gap-4">
-                        <input type="text" id="searchInput" placeholder="Entrez le nom ou prénom de l'invité" class="flex-grow p-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gold focus:border-transparent">
-                        <button id="searchButton" class="btn-gold px-8 py-4 rounded-lg font-medium">
-                            <i class="fas fa-search mr-2"></i> Rechercher
-                        </button>
-                    </div>
-                    <p class="text-sm text-gray-500 mt-4">
-                        Recherchez par nom ou prénom. Les résultats s'afficheront ci-dessous.
-                    </p>
-                </div>
-                
-                <!-- Résultat de recherche -->
-                <div id="searchResult" class="hidden search-result mb-8">
-                    <!-- Le résultat s'affichera ici dynamiquement -->
-                </div>
-                
-                <!-- Message d'erreur -->
-                <div id="errorMessage" class="hidden p-6 bg-red-50 border border-red-200 rounded-lg text-red-700 text-center mb-8">
-                    <i class="fas fa-exclamation-circle text-2xl mb-3"></i>
-                    <p id="errorText" class="text-lg font-medium"></p>
-                    <p class="mt-2">Veuillez réessayer avec une autre orthographe.</p>
-                </div>
-                
-                <!-- Panneau d'administration -->
-                <div id="adminPanel" class="admin-panel p-6 rounded-lg">
-                    <h3 class="heading-font text-2xl font-bold mb-6 gold-text">Gestion des Invités</h3>
-                    
-                    <div class="mb-8">
-                        <h4 class="text-xl font-bold mb-4">Ajouter un invité</h4>
-                        <div class="grid md:grid-cols-3 gap-4 mb-4">
-                            <input type="text" id="nomInput" placeholder="Nom" class="p-3 border border-gray-300 rounded-lg">
-                            <input type="text" id="prenomInput" placeholder="Prénom" class="p-3 border border-gray-300 rounded-lg">
-                            <input type="number" id="tableInput" placeholder="Numéro de table" class="p-3 border border-gray-300 rounded-lg" min="1" max="30">
-                        </div>
-                        <button id="addGuestButton" class="btn-gold px-6 py-3 rounded-lg font-medium">
-                            <i class="fas fa-user-plus mr-2"></i> Ajouter l'invité
-                        </button>
-                    </div>
-                    
-                    <div>
-                        <h4 class="text-xl font-bold mb-4">Liste des invités enregistrés</h4>
-                        <div class="overflow-x-auto">
-                            <table class="w-full border-collapse">
-                                <thead>
-                                    <tr class="bg-gray-100">
-                                        <th class="p-3 border border-gray-300 text-left">Nom</th>
-                                        <th class="p-3 border border-gray-300 text-left">Prénom</th>
-                                        <th class="p-3 border border-gray-300 text-left">Table</th>
-                                        <th class="p-3 border border-gray-300 text-left">Actions</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="guestList">
-                                    <!-- Les invités seront ajoutés ici dynamiquement -->
-                                </tbody>
-                            </table>
-                        </div>
-                        <p class="text-sm text-gray-500 mt-4">
-                            <i class="fas fa-info-circle mr-1"></i> 
-                            Cette section est uniquement accessible aux organisateurs authentifiés.
+                    <div class="mt-8 pt-8 border-t border-gold-light/30">
+                        <p class="text-sm text-gray-500">
+                            <i class="fas fa-info-circle mr-1"></i>
+                            Un doute sur votre invitation ? Contactez l'accueil au 01 XX XX XX XX
                         </p>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
-
-    <!-- Section Galerie -->
-    <section id="galerie" class="py-16 bg-ivory">
-        <div class="container mx-auto px-4">
-            <h2 class="section-title heading-font text-3xl text-center">Galerie Photos</h2>
-            <p class="text-center mb-10 max-w-2xl mx-auto">
-                Quelques moments de bonheur partagés par le couple.
-            </p>
             
-            <div class="grid md:grid-cols-3 gap-6 photo-gallery">
-                <!-- Photo 1 -->
-                <div class="rounded-lg overflow-hidden shadow-lg">
-                    <div class="bg-gray-300 h-64 flex items-center justify-center">
-                        <span class="text-gray-500">Photo 1 - Le couple</span>
+            <!-- Interface de vérification (authentifié) -->
+            <div id="verificationInterface" class="hidden max-w-4xl mx-auto">
+                <!-- En-tête avec déconnexion -->
+                <div class="flex justify-between items-center mb-8 reveal">
+                    <div class="flex items-center gap-3">
+                        <div class="w-12 h-12 gold-gradient rounded-full flex items-center justify-center">
+                            <i class="fas fa-user-tie text-white text-xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="heading-font text-2xl font-bold">Mode Organisateur</h3>
+                            <p class="text-sm text-gray-500">Gestion des invités</p>
+                        </div>
                     </div>
+                    <button id="logoutBtn" class="px-6 py-3 bg-red-50 text-red-600 rounded-full hover:bg-red-100 transition text-sm font-semibold">
+                        <i class="fas fa-sign-out-alt mr-2"></i>
+                        Déconnexion
+                    </button>
                 </div>
                 
-                <!-- Photo 2 -->
-                <div class="rounded-lg overflow-hidden shadow-lg">
-                    <div class="bg-gray-300 h-64 flex items-center justify-center">
-                        <span class="text-gray-500">Photo 2 - Fiançailles</span>
+                <!-- Barre de recherche -->
+                <div class="bg-gradient-to-br from-white to-cream rounded-3xl p-8 gold-shadow mb-8 reveal">
+                    <div class="flex flex-col md:flex-row gap-4">
+                        <div class="flex-grow relative">
+                            <i class="fas fa-search absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                            <input type="text" id="searchInput" 
+                                   placeholder="Rechercher par nom ou prénom..." 
+                                   class="w-full pl-12 pr-4 py-4 border border-gray-200 rounded-full focus:outline-none focus:ring-2 focus:ring-gold focus:border-transparent">
+                        </div>
+                        <button id="searchButton" class="btn-gold px-8 py-4 rounded-full font-semibold whitespace-nowrap">
+                            <i class="fas fa-search mr-2"></i>
+                            Rechercher
+                        </button>
                     </div>
+                    <p class="text-sm text-gray-400 mt-4 text-center">
+                        Ex: Dupont, Marie, Jean...
+                    </p>
                 </div>
                 
-                <!-- Photo 3 -->
-                <div class="rounded-lg overflow-hidden shadow-lg">
-                    <div class="bg-gray-300 h-64 flex items-center justify-center">
-                        <span class="text-gray-500">Photo 3 - Préparatifs</span>
+                <!-- Résultat de recherche -->
+                <div id="searchResult" class="hidden mb-8 reveal"></div>
+                
+                <!-- Message d'erreur -->
+                <div id="errorMessage" class="hidden p-6 bg-red-50 border border-red-200 rounded-2xl text-red-700 text-center mb-8 reveal">
+                    <i class="fas fa-exclamation-circle text-3xl mb-3"></i>
+                    <p id="errorText" class="text-lg font-medium"></p>
+                </div>
+                
+                <!-- Panneau d'administration -->
+                <div id="adminPanel" class="admin-panel p-8 reveal">
+                    <h3 class="heading-font text-2xl font-bold mb-8 text-center">
+                        <span class="gold-text">✦</span> Gestion des Invités <span class="gold-text">✦</span>
+                    </h3>
+                    
+                    <!-- Formulaire d'ajout -->
+                    <div class="bg-gold-pale/30 rounded-2xl p-6 mb-8">
+                        <h4 class="font-semibold mb-4 flex items-center gap-2">
+                            <i class="fas fa-user-plus gold-text"></i>
+                            Ajouter un nouvel invité
+                        </h4>
+                        <div class="grid md:grid-cols-3 gap-4 mb-4">
+                            <input type="text" id="nomInput" placeholder="Nom" class="p-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-gold">
+                            <input type="text" id="prenomInput" placeholder="Prénom" class="p-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-gold">
+                            <input type="number" id="tableInput" placeholder="N° Table (1-30)" class="p-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-gold" min="1" max="30">
+                        </div>
+                        <button id="addGuestButton" class="btn-gold px-6 py-3 rounded-lg font-semibold">
+                            <i class="fas fa-check-circle mr-2"></i>
+                            Enregistrer l'invité
+                        </button>
+                    </div>
+                    
+                    <!-- Liste des invités -->
+                    <div>
+                        <h4 class="font-semibold mb-4 flex items-center gap-2">
+                            <i class="fas fa-list gold-text"></i>
+                            Liste des invités enregistrés
+                        </h4>
+                        <div class="overflow-x-auto bg-white rounded-lg border border-gray-100">
+                            <table class="w-full">
+                                <thead class="bg-gray-50">
+                                    <tr>
+                                        <th class="p-4 text-left text-sm font-semibold text-gray-600">Nom</th>
+                                        <th class="p-4 text-left text-sm font-semibold text-gray-600">Prénom</th>
+                                        <th class="p-4 text-left text-sm font-semibold text-gray-600">Table</th>
+                                        <th class="p-4 text-left text-sm font-semibold text-gray-600">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="guestList" class="divide-y divide-gray-100"></tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
+        </div>
+    </section>
+
+    <!-- ===== FOOTER ===== -->
+    <footer class="bg-charcoal text-white pt-16 pb-8">
+        <div class="container mx-auto px-6">
+            <div class="flex flex-col md:flex-row justify-between items-center mb-12">
+                <div class="flex items-center gap-4 mb-6 md:mb-0">
+                    <div class="w-12 h-12 gold-gradient rounded-full flex items-center justify-center">
+                        <i class="fas fa-heart text-white"></i>
+                    </div>
+                    <div>
+                        <h4 class="heading-font text-2xl font-bold">Mariage 2025</h4>
+                        <p class="text-gray-400 text-sm">22 Février · Grand Hôtel</p>
+                    </div>
+                </div>
+                
+                <div class="flex gap-8 text-sm">
+                    <a href="#accueil" class="text-gray-300 hover:text-gold transition">Accueil</a>
+                    <a href="#programme" class="text-gray-300 hover:text-gold transition">Programme</a>
+                    <a href="#galerie" class="text-gray-300 hover:text-gold transition">Galerie</a>
+                    <a href="#invites" class="text-gray-300 hover:text-gold transition">Invités</a>
+                </div>
+            </div>
             
-            <div class="text-center mt-10">
-                <p class="text-lg">
-                    Plus de photos seront ajoutées après la célébration !
+            <div class="border-t border-gray-800 pt-8 text-center">
+                <p class="text-gray-400 text-sm">
+                    © 2025 Mariage de mon Frère. Tous droits réservés.
                 </p>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="bg-charcoal text-white py-12">
-        <div class="container mx-auto px-4">
-            <div class="flex flex-col md:flex-row justify-between items-center">
-                <div class="mb-6 md:mb-0">
-                    <div class="flex items-center mb-4">
-                        <div class="w-10 h-10 gold-gradient rounded-full mr-3"></div>
-                        <h2 class="heading-font text-2xl font-bold">Mariage<span class="gold-text">21</span></h2>
-                    </div>
-                    <p class="text-gray-300">Célébrons l'amour et l'union familiale</p>
-                </div>
-                
-                <div class="text-center md:text-right">
-                    <h3 class="heading-font text-xl font-bold mb-4">Informations</h3>
-                    <p class="text-gray-300">22 Février 2025</p>
-                    <p class="text-gray-300">Grand Hôtel, Ville</p>
-                    <p class="text-gray-300">À partir de 14h00</p>
-                </div>
-            </div>
-            
-            <div class="border-t border-gray-700 mt-8 pt-8 text-center text-gray-300">
-                <p>© 2025 Mariage de mon Frère. Tous droits réservés.</p>
-                <p class="mt-2">Site créé avec amour pour cette occasion spéciale.</p>
+                <p class="text-gray-500 text-xs mt-2">
+                    Site créé avec amour pour cette journée exceptionnelle.
+                </p>
             </div>
         </div>
     </footer>
 
-    <!-- Script JavaScript -->
+    <!-- ===== SCRIPT JAVASCRIPT ===== -->
     <script>
-        // Données des invités (simulées, en production elles viendraient d'une base de données)
+        // DONNÉES DES INVITÉS
         let guests = [
             { id: 1, nom: "Dupont", prenom: "Jean", table: 5 },
             { id: 2, nom: "Martin", prenom: "Sophie", table: 3 },
@@ -535,23 +844,22 @@
             { id: 7, nom: "Durand", prenom: "Claude", table: 1 },
             { id: 8, nom: "Leroy", prenom: "Nathalie", table: 6 },
             { id: 9, nom: "Moreau", prenom: "Alain", table: 5 },
-            { id: 10, nom: "Simon", prenom: "Christine", table: 3 },
-            { id: 11, nom: "Laurent", prenom: "Michel", table: 7 },
-            { id: 12, nom: "Lefebvre", prenom: "Catherine", table: 2 }
+            { id: 10, nom: "Simon", prenom: "Christine", table: 3 }
         ];
 
-        // Identifiants de connexion (en production, il faudrait un système plus sécurisé)
+        // IDENTIFIANTS DE CONNEXION
         const validCredentials = [
             { username: "organisateur", password: "mariage2025" },
             { username: "admin", password: "admin123" },
-            { username: "potier", password: "accesinvites" }
+            { username: "potier", password: "accesinvites" },
+            { username: "frere", password: "mariage21" }
         ];
 
-        // État d'authentification
+        // ÉTAT D'AUTHENTIFICATION
         let isAuthenticated = false;
 
-        // Éléments DOM
-        // Authentification
+        // ===== ÉLÉMENTS DOM =====
+        // Auth
         const authModal = document.getElementById('authModal');
         const loginForm = document.getElementById('loginForm');
         const usernameInput = document.getElementById('username');
@@ -563,7 +871,7 @@
         const adminAccessBtnMobile = document.getElementById('adminAccessBtnMobile');
         const accessVerificationBtn = document.getElementById('accessVerificationBtn');
         
-        // Interface de vérification
+        // Interface invités
         const guestMessage = document.getElementById('guestMessage');
         const verificationInterface = document.getElementById('verificationInterface');
         const searchInput = document.getElementById('searchInput');
@@ -573,77 +881,69 @@
         const errorText = document.getElementById('errorText');
         const logoutBtn = document.getElementById('logoutBtn');
         
-        // Éléments admin
+        // Admin
         const nomInput = document.getElementById('nomInput');
         const prenomInput = document.getElementById('prenomInput');
         const tableInput = document.getElementById('tableInput');
         const addGuestButton = document.getElementById('addGuestButton');
         const guestList = document.getElementById('guestList');
         
-        // Menu mobile
+        // Mobile
         const menuToggle = document.getElementById('menu-toggle');
         const mobileMenu = document.getElementById('mobile-menu');
+
+        // ===== FONCTIONS =====
         
+        // Animation au scroll
+        function revealElements() {
+            const reveals = document.querySelectorAll('.reveal');
+            reveals.forEach(element => {
+                const windowHeight = window.innerHeight;
+                const elementTop = element.getBoundingClientRect().top;
+                const elementVisible = 150;
+                
+                if (elementTop < windowHeight - elementVisible) {
+                    element.classList.add('active');
+                }
+            });
+        }
+
         // Initialisation
-        renderGuestList();
-        
-        // Événements d'authentification
-        adminAccessBtn.addEventListener('click', showAuthModal);
-        adminAccessBtnMobile.addEventListener('click', showAuthModal);
-        accessVerificationBtn.addEventListener('click', showAuthModal);
-        
-        cancelLoginBtn.addEventListener('click', hideAuthModal);
-        
-        loginForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            authenticateUser();
+        window.addEventListener('load', () => {
+            renderGuestList();
+            revealElements();
         });
-        
-        // Événements de vérification des invités
-        searchButton.addEventListener('click', searchGuest);
-        searchInput.addEventListener('keyup', function(event) {
-            if (event.key === 'Enter') {
-                searchGuest();
-            }
-        });
-        
-        // Déconnexion
-        logoutBtn.addEventListener('click', logout);
-        
-        // Ajout d'un invité
-        addGuestButton.addEventListener('click', addGuest);
-        
-        // Gestion du menu mobile
-        menuToggle.addEventListener('click', function() {
+
+        window.addEventListener('scroll', revealElements);
+
+        // Menu mobile
+        menuToggle.addEventListener('click', () => {
             mobileMenu.classList.toggle('hidden');
         });
-        
-        // Fermer le menu mobile en cliquant sur un lien
+
+        // Fermer menu mobile sur clic
         document.querySelectorAll('#mobile-menu a').forEach(link => {
-            link.addEventListener('click', function() {
+            link.addEventListener('click', () => {
                 mobileMenu.classList.add('hidden');
             });
         });
-        
-        // Afficher le modal d'authentification
+
+        // ===== AUTHENTIFICATION =====
         function showAuthModal() {
             authModal.classList.remove('hidden');
             usernameInput.focus();
         }
-        
-        // Cacher le modal d'authentification
+
         function hideAuthModal() {
             authModal.classList.add('hidden');
             loginForm.reset();
             loginError.classList.add('hidden');
         }
-        
-        // Authentifier l'utilisateur
+
         function authenticateUser() {
             const username = usernameInput.value.trim();
             const password = passwordInput.value.trim();
             
-            // Vérifier les identifiants
             const isValid = validCredentials.some(cred => 
                 cred.username === username && cred.password === password
             );
@@ -654,47 +954,39 @@
                 showVerificationInterface();
             } else {
                 loginError.classList.remove('hidden');
-                errorMessageText.textContent = "Nom d'utilisateur ou mot de passe incorrect";
+                errorMessageText.textContent = "Identifiants incorrects";
                 passwordInput.value = '';
                 passwordInput.focus();
             }
         }
-        
-        // Afficher l'interface de vérification
+
         function showVerificationInterface() {
             guestMessage.classList.add('hidden');
             verificationInterface.classList.remove('hidden');
-            
-            // Faire défiler jusqu'à la section
             document.getElementById('invites').scrollIntoView({ behavior: 'smooth' });
         }
-        
-        // Déconnexion
+
         function logout() {
             isAuthenticated = false;
             verificationInterface.classList.add('hidden');
             guestMessage.classList.remove('hidden');
-            
-            // Réinitialiser les champs de recherche
             searchInput.value = '';
             searchResult.classList.add('hidden');
             errorMessage.classList.add('hidden');
         }
-        
-        // Recherche d'invité
+
+        // ===== RECHERCHE D'INVITÉS =====
         function searchGuest() {
             const searchTerm = searchInput.value.trim().toLowerCase();
             
-            // Masquer les résultats précédents
             searchResult.classList.add('hidden');
             errorMessage.classList.add('hidden');
             
             if (!searchTerm) {
-                showError("Veuillez entrer un nom ou prénom pour la recherche.");
+                showError("Veuillez entrer un nom ou prénom.");
                 return;
             }
             
-            // Recherche dans la liste des invités
             const foundGuest = guests.find(guest => 
                 guest.nom.toLowerCase().includes(searchTerm) || 
                 guest.prenom.toLowerCase().includes(searchTerm)
@@ -703,33 +995,33 @@
             if (foundGuest) {
                 displayGuestResult(foundGuest);
             } else {
-                showError("Désolé, ce nom ne figure pas sur la liste des invités.");
+                showError("Ce nom ne figure pas sur la liste des invités.");
             }
         }
-        
-        // Afficher le résultat de la recherche
+
         function displayGuestResult(guest) {
             const resultHTML = `
-                <div class="bg-green-50 border border-green-200 rounded-lg p-8 text-center">
-                    <div class="text-5xl text-green-500 mb-4">
-                        <i class="fas fa-check-circle"></i>
+                <div class="bg-gradient-to-br from-green-50 to-emerald-50 border border-green-100 rounded-2xl p-8 text-center">
+                    <div class="w-20 h-20 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg">
+                        <i class="fas fa-check-circle text-white text-4xl"></i>
                     </div>
-                    <h3 class="heading-font text-2xl font-bold mb-2">Invitation confirmée !</h3>
-                    <p class="text-xl mb-6">Invité: <span class="font-bold">${guest.prenom} ${guest.nom}</span></p>
+                    <h3 class="heading-font text-3xl font-bold text-green-700 mb-4">✓ Invitation Confirmée</h3>
+                    <p class="text-xl mb-6">
+                        <span class="font-semibold text-gray-800">${guest.prenom} ${guest.nom}</span>
+                    </p>
                     
-                    <div class="flex flex-col md:flex-row justify-center items-center space-y-4 md:space-y-0 md:space-x-8">
-                        <div class="text-center">
-                            <div class="table-number mx-auto mb-2 text-2xl">${guest.table}</div>
-                            <div class="text-lg font-medium">Numéro de table</div>
-                        </div>
-                        <div class="text-center">
-                            <div class="text-xl font-bold gold-text">Salle des Fêtes</div>
-                            <div class="text-sm">Zone de réception</div>
-                        </div>
+                    <div class="bg-white rounded-xl p-6 max-w-sm mx-auto mb-6">
+                        <p class="text-sm text-gray-500 mb-2">Table attribuée</p>
+                        <div class="table-badge">${guest.table}</div>
                     </div>
                     
-                    <p class="mt-8 text-gray-600">
-                        Veuillez indiquer à l'invité de se diriger vers la table n°${guest.table}.
+                    <div class="bg-gold-pale rounded-lg p-4 text-gold">
+                        <i class="fas fa-map-marker-alt mr-2"></i>
+                        Salle des Fêtes - Grand Hôtel
+                    </div>
+                    
+                    <p class="mt-6 text-sm text-gray-500">
+                        Veuillez diriger l'invité vers la table n°${guest.table}
                     </p>
                 </div>
             `;
@@ -737,30 +1029,28 @@
             searchResult.innerHTML = resultHTML;
             searchResult.classList.remove('hidden');
         }
-        
-        // Afficher un message d'erreur
+
         function showError(message) {
             errorText.textContent = message;
             errorMessage.classList.remove('hidden');
         }
-        
-        // Ajouter un invité
+
+        // ===== GESTION DES INVITÉS (ADMIN) =====
         function addGuest() {
             const nom = nomInput.value.trim();
             const prenom = prenomInput.value.trim();
             const table = parseInt(tableInput.value);
             
             if (!nom || !prenom || !table) {
-                alert("Veuillez remplir tous les champs pour ajouter un invité.");
+                alert("Veuillez remplir tous les champs.");
                 return;
             }
             
             if (table < 1 || table > 30) {
-                alert("Le numéro de table doit être compris entre 1 et 30.");
+                alert("Le numéro de table doit être entre 1 et 30.");
                 return;
             }
             
-            // Vérifier si l'invité existe déjà
             const existingGuest = guests.find(guest => 
                 guest.nom.toLowerCase() === nom.toLowerCase() && 
                 guest.prenom.toLowerCase() === prenom.toLowerCase()
@@ -771,7 +1061,6 @@
                 return;
             }
             
-            // Ajouter le nouvel invité
             const newGuest = {
                 id: guests.length + 1,
                 nom: nom,
@@ -782,63 +1071,96 @@
             guests.push(newGuest);
             renderGuestList();
             
-            // Réinitialiser les champs
             nomInput.value = '';
             prenomInput.value = '';
             tableInput.value = '';
             
-            // Afficher un message de confirmation
-            alert(`Invité ${prenom} ${nom} ajouté avec succès à la table ${table}.`);
+            alert(`✅ Invité ${prenom} ${nom} ajouté à la table ${table}`);
         }
-        
-        // Supprimer un invité
+
         function deleteGuest(id) {
-            if (confirm("Êtes-vous sûr de vouloir supprimer cet invité ?")) {
+            if (confirm("Supprimer cet invité de la liste ?")) {
                 guests = guests.filter(guest => guest.id !== id);
                 renderGuestList();
             }
         }
-        
-        // Afficher la liste des invités
+
         function renderGuestList() {
+            if (!guestList) return;
+            
             guestList.innerHTML = '';
             
             if (guests.length === 0) {
                 guestList.innerHTML = `
                     <tr>
-                        <td colspan="4" class="p-6 text-center text-gray-500">
-                            Aucun invité enregistré pour le moment.
+                        <td colspan="4" class="p-8 text-center text-gray-500">
+                            Aucun invité enregistré
                         </td>
                     </tr>
                 `;
                 return;
             }
             
-            guests.forEach(guest => {
+            guests.sort((a, b) => a.nom.localeCompare(b.nom)).forEach(guest => {
                 const row = document.createElement('tr');
-                row.className = 'hover:bg-gray-50';
+                row.className = 'hover:bg-gray-50 transition';
                 row.innerHTML = `
-                    <td class="p-3 border border-gray-300">${guest.nom}</td>
-                    <td class="p-3 border border-gray-300">${guest.prenom}</td>
-                    <td class="p-3 border border-gray-300">
-                        <span class="table-number inline-block">${guest.table}</span>
+                    <td class="p-4 font-medium">${guest.nom}</td>
+                    <td class="p-4">${guest.prenom}</td>
+                    <td class="p-4">
+                        <span class="inline-flex items-center justify-center w-10 h-10 bg-gold-pale rounded-full text-gold font-bold">
+                            ${guest.table}
+                        </span>
                     </td>
-                    <td class="p-3 border border-gray-300">
-                        <button onclick="deleteGuest(${guest.id})" class="text-red-500 hover:text-red-700">
-                            <i class="fas fa-trash-alt"></i> Supprimer
+                    <td class="p-4">
+                        <button onclick="deleteGuest(${guest.id})" 
+                                class="text-red-500 hover:text-red-700 hover:bg-red-50 p-2 rounded-lg transition">
+                            <i class="fas fa-trash-alt"></i>
                         </button>
                     </td>
                 `;
                 guestList.appendChild(row);
             });
         }
+
+        // ===== EVENT LISTENERS =====
+        adminAccessBtn.addEventListener('click', showAuthModal);
+        adminAccessBtnMobile.addEventListener('click', showAuthModal);
+        accessVerificationBtn.addEventListener('click', showAuthModal);
+        cancelLoginBtn.addEventListener('click', hideAuthModal);
         
-        // Simulation de données au chargement de la page
-        window.addEventListener('DOMContentLoaded', function() {
-            // Pour la démonstration, on peut simuler une connexion automatique
-            // en commentant la ligne ci-dessous en production
-            // isAuthenticated = true;
-            // if (isAuthenticated) showVerificationInterface();
+        loginForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            authenticateUser();
+        });
+        
+        searchButton.addEventListener('click', searchGuest);
+        searchInput.addEventListener('keyup', (e) => {
+            if (e.key === 'Enter') searchGuest();
+        });
+        
+        logoutBtn.addEventListener('click', logout);
+        addGuestButton.addEventListener('click', addGuest);
+
+        // Rendre deleteGuest accessible globalement
+        window.deleteGuest = deleteGuest;
+
+        // Fermer le modal en cliquant à l'extérieur
+        window.addEventListener('click', (e) => {
+            if (e.target === authModal) {
+                hideAuthModal();
+            }
+        });
+
+        // Smooth scroll pour les ancres
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
         });
     </script>
 </body>
