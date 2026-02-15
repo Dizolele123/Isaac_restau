@@ -1271,18 +1271,134 @@
 
     <script>
         // ===== DONNÉES DES INVITÉS AVEC STATUT DE PRÉSENCE =====
-        let guests = [
-            { id: 1, nom: "Dupont", prenom: "Jean", table: 5, estEntré: false, heureEntrée: null },
-            { id: 2, nom: "Martin", prenom: "Sophie", table: 3, estEntré: false, heureEntrée: null },
-            { id: 3, nom: "Bernard", prenom: "Pierre", table: 7, estEntré: false, heureEntrée: null },
-            { id: 4, nom: "Thomas", prenom: "Marie", table: 2, estEntré: false, heureEntrée: null },
-            { id: 5, nom: "Robert", prenom: "Philippe", table: 8, estEntré: false, heureEntrée: null },
-            { id: 6, nom: "Petit", prenom: "Isabelle", table: 4, estEntré: false, heureEntrée: null },
-            { id: 7, nom: "Durand", prenom: "Claude", table: 1, estEntré: false, heureEntrée: null },
-            { id: 8, nom: "Leroy", prenom: "Nathalie", table: 6, estEntré: false, heureEntrée: null },
-            { id: 9, nom: "Moreau", prenom: "Alain", table: 5, estEntré: false, heureEntrée: null },
-            { id: 10, nom: "Simon", prenom: "Christine", table: 3, estEntré: false, heureEntrée: null }
-        ];
+       let guests = [
+    // TABLE 17
+    { id: 1, nom: "Mavoungou", prenom: "(Air force)", table: 17 },
+    { id: 2, nom: "Bakekolo", prenom: "Prince", table: 17 },
+    { id: 3, nom: "Bonono", prenom: "", table: 17 },
+    { id: 4, nom: "Kissouessoue", prenom: "Ben", table: 17 },
+    { id: 5, nom: "Jerome", prenom: "", table: 17 },
+    { id: 6, nom: "Bebo", prenom: "Theo", table: 17 },
+    { id: 7, nom: "Loko", prenom: "", table: 17 },
+    { id: 8, nom: "Destin", prenom: "", table: 17 },
+    { id: 9, nom: "Sahra", prenom: "", table: 17 },
+    { id: 10, nom: "Nkouami", prenom: "Claude", table: 17 },
+
+    // TABLE 15
+    { id: 11, nom: "Lepaye", prenom: "Theogene", table: 15 },
+    { id: 12, nom: "Padou", prenom: "", table: 15 },
+    { id: 13, nom: "Miatsonama", prenom: "", table: 15 },
+    { id: 14, nom: "Makila", prenom: "Ulrich", table: 15 },
+    { id: 15, nom: "Blondel", prenom: "", table: 15 },
+    { id: 16, nom: "Mankou", prenom: "Claver", table: 15 },
+    { id: 17, nom: "Lafia", prenom: "", table: 15 },
+    { id: 18, nom: "Valeri", prenom: "", table: 15 },
+    { id: 19, nom: "Eddy", prenom: "", table: 15 },
+    { id: 20, nom: "Diabatantou", prenom: "Marina", table: 15 },
+
+    // TABLE 13
+    { id: 21, nom: "Mpemba", prenom: "Tcherry", table: 13 },
+    { id: 22, nom: "Batala", prenom: "Cesar", table: 13 },
+    { id: 23, nom: "Fortuné", prenom: "", table: 13 },
+    { id: 24, nom: "FM", prenom: "Ghyslain", table: 13 },
+    { id: 25, nom: "Mpama", prenom: "Drey", table: 13 },
+    { id: 26, nom: "Jolphet", prenom: "", table: 13 },
+    { id: 27, nom: "Arnaud", prenom: "", table: 13 },
+    { id: 28, nom: "Math", prenom: "", table: 13 },
+    { id: 29, nom: "Durel", prenom: "", table: 13 },
+    { id: 30, nom: "Albertine", prenom: "", table: 13 },
+
+    // TABLE 11
+    { id: 31, nom: "Balende", prenom: "", table: 11 },
+    { id: 32, nom: "Ngoma Mpassi", prenom: "Couple", table: 11 },
+    { id: 33, nom: "Dinas Birthday", prenom: "", table: 11 },
+    { id: 34, nom: "Hebron", prenom: "", table: 11 },
+    { id: 35, nom: "Hekandapagne", prenom: "", table: 11 },
+    { id: 36, nom: "Risi", prenom: "", table: 11 },
+    { id: 37, nom: "Martial", prenom: "", table: 11 },
+    { id: 38, nom: "Gaudin", prenom: "M", table: 11 },
+    { id: 39, nom: "Akomo", prenom: "", table: 11 },
+
+    // TABLE 9
+    { id: 40, nom: "Mayaya", prenom: "Laurvie", table: 9 },
+    { id: 41, nom: "Miangounguila", prenom: "", table: 9 },
+    { id: 42, nom: "Léme", prenom: "Patrick", table: 9 },
+    { id: 43, nom: "Etchia", prenom: "", table: 9 },
+    { id: 44, nom: "Achille", prenom: "", table: 9 },
+    { id: 45, nom: "Anderson", prenom: "", table: 9 },
+    { id: 46, nom: "Damas", prenom: "", table: 9 },
+    { id: 47, nom: "Odongo", prenom: "", table: 9 },
+    { id: 48, nom: "Ruben", prenom: "dongo", table: 9 },
+    { id: 49, nom: "Wenceslas", prenom: "", table: 9 },
+
+    // TABLE 7
+    { id: 50, nom: "Divin", prenom: "Couple", table: 7 },
+    { id: 51, nom: "Ndoulou", prenom: "Ghyslain", table: 7 },
+    { id: 52, nom: "Pounga", prenom: "Christ", table: 7 },
+    { id: 53, nom: "Nzamba", prenom: "Tchibault", table: 7 },
+    { id: 54, nom: "Milandou", prenom: "Espoir", table: 7 },
+    { id: 55, nom: "FM", prenom: "Ghis", table: 7 },
+    { id: 56, nom: "Malessa", prenom: "Alexe", table: 7 },
+    { id: 57, nom: "Awé", prenom: "", table: 7 },
+    { id: 58, nom: "Balossa", prenom: "Diane", table: 7 },
+
+    // TABLE 5
+    { id: 59, nom: "Bina Ngoko", prenom: "B", table: 5 },
+    { id: 60, nom: "Ngoulou", prenom: "Lyse", table: 5 },
+    { id: 61, nom: "Nzaba", prenom: "Levi", table: 5 },
+    { id: 62, nom: "Bazieta", prenom: "Francia", table: 5 },
+    { id: 63, nom: "Aucrene", prenom: "", table: 5 },
+    { id: 64, nom: "Marcelia", prenom: "", table: 5 },
+    { id: 65, nom: "Rajiv Bouzanga", prenom: "Couple", table: 5 },
+    { id: 66, nom: "Alain Ngoro", prenom: "Couple", table: 5 },
+
+    // TABLE 3
+    { id: 67, nom: "Asmeul", prenom: "Gloria", table: 3 },
+    { id: 68, nom: "Matongo", prenom: "Jervais", table: 3 },
+    { id: 69, nom: "Malongo", prenom: "Arsene", table: 3 },
+    { id: 70, nom: "Biahomba", prenom: "Jess", table: 3 },
+    { id: 71, nom: "Matsima Jerdan", prenom: "Couple", table: 3 },
+    { id: 72, nom: "Kintombo", prenom: "Davy", table: 3 },
+    { id: 73, nom: "Tassio", prenom: "*", table: 3 },
+    { id: 74, nom: "Jeasmel", prenom: "", table: 3 },
+    { id: 75, nom: "Nsonga", prenom: "Asmi", table: 3 },
+    { id: 76, nom: "Lyonel", prenom: "", table: 3 },
+
+    // TABLE 1
+    { id: 77, nom: "ERICK", prenom: "Couple", table: 1 },
+    { id: 78, nom: "Matondo", prenom: "Fabrice", table: 1 },
+    { id: 79, nom: "Nsounga", prenom: "Erick", table: 1 },
+    { id: 80, nom: "Loufouakazi", prenom: "Arnid", table: 1 },
+    { id: 81, nom: "Kimbouri-Kaya", prenom: "", table: 1 },
+    { id: 82, nom: "Banzouzi", prenom: "Leonard", table: 1 },
+    { id: 83, nom: "Vivien", prenom: "", table: 1 },
+    { id: 84, nom: "Pulcherie", prenom: "", table: 1 },
+    { id: 85, nom: "Louheko", prenom: "Tonie", table: 1 },
+    { id: 86, nom: "Kiafouka", prenom: "Julia", table: 1 },
+
+    // INVITÉS DE L'ÉGLISE
+    { id: 87, nom: "Apotre Dieudonné", prenom: "Couple", table: "Église" },
+    { id: 88, nom: "Apotre Mbambi", prenom: "", table: "Église" },
+    { id: 89, nom: "Apotre Chadrack", prenom: "", table: "Église" },
+    { id: 90, nom: "Apotre Mampassi", prenom: "", table: "Église" },
+    { id: 91, nom: "Predi Adrien", prenom: "Couple", table: "Église" },
+    { id: 92, nom: "Predi Roland", prenom: "Couple", table: "Église" },
+    { id: 93, nom: "Predi Ghyslain", prenom: "Couple", table: "Église" },
+    { id: 94, nom: "Predi Heritier", prenom: "", table: "Église" },
+    { id: 95, nom: "Predi Djoni", prenom: "Couple", table: "Église" },
+    { id: 96, nom: "Predi Ndedi", prenom: "", table: "Église" },
+    { id: 97, nom: "Predi Jethro", prenom: "", table: "Église" },
+    { id: 98, nom: "Predi Guy Roger", prenom: "", table: "Église" },
+    { id: 99, nom: "Predi Faustin", prenom: "Couple", table: "Église" },
+    { id: 100, nom: "Predi Helombe", prenom: "", table: "Église" },
+    { id: 101, nom: "Diac Angele", prenom: "", table: "Église" },
+    { id: 102, nom: "Maman Malanda", prenom: "", table: "Église" },
+    { id: 103, nom: "Diac Sylvie", prenom: "", table: "Église" },
+    { id: 104, nom: "Diac Honorine", prenom: "", table: "Église" },
+    { id: 105, nom: "Diac Virginy", prenom: "", table: "Église" },
+    { id: 106, nom: "Predi Bikandou Roger", prenom: "Couple", table: "Église" },
+    { id: 107, nom: "Maman José", prenom: "", table: "Église" }
+];
 
         // Historique des entrées (timeline)
         let entryHistory = [];
@@ -1413,28 +1529,87 @@
         }
 
         // ===== FONCTION DE RECHERCHE AMÉLIORÉE =====
-        function searchGuest() {
-            const searchTerm = searchInput.value.trim().toLowerCase();
-            
-            searchResult.classList.add('hidden');
-            errorMessage.classList.add('hidden');
-            
-            if (!searchTerm) {
-                showError("Veuillez entrer un nom ou prénom.");
-                return;
-            }
-            
-            const foundGuest = guests.find(guest => 
-                guest.nom.toLowerCase().includes(searchTerm) || 
-                guest.prenom.toLowerCase().includes(searchTerm)
-            );
-            
-            if (foundGuest) {
-                displayGuestResult(foundGuest);
-            } else {
-                showError("Ce nom ne figure pas sur la liste des invités.");
-            }
+      function searchGuest() {
+    const searchTerm = searchInput.value.trim();
+    
+    // Masquer les résultats précédents
+    searchResult.classList.add('hidden');
+    errorMessage.classList.add('hidden');
+    
+    if (!searchTerm) {
+        showError("Veuillez entrer un nom ou prénom pour la recherche.");
+        return;
+    }
+    
+    // Normaliser le terme de recherche (enlever accents, espaces multiples, mettre en minuscule)
+    const normalizedSearchTerm = normalizeString(searchTerm);
+    
+    // Recherche avec plusieurs algorithmes de correspondance
+    const foundGuests = guests.filter(guest => {
+        // Créer différentes versions du nom de l'invité pour la comparaison
+        const guestFullName = `${guest.prenom} ${guest.nom}`.trim();
+        const guestReverseName = `${guest.nom} ${guest.prenom}`.trim();
+        const guestNomOnly = guest.nom;
+        const guestPrenomOnly = guest.prenom;
+        
+        // Normaliser toutes les versions
+        const normalizedFullName = normalizeString(guestFullName);
+        const normalizedReverseName = normalizeString(guestReverseName);
+        const normalizedNom = normalizeString(guestNomOnly);
+        const normalizedPrenom = normalizeString(guestPrenomOnly);
+        
+        // 1. Correspondance exacte (après normalisation)
+        if (normalizedFullName === normalizedSearchTerm || 
+            normalizedReverseName === normalizedSearchTerm) {
+            return true;
         }
+        
+        // 2. Le terme de recherche est contenu dans le nom complet
+        if (normalizedFullName.includes(normalizedSearchTerm) || 
+            normalizedReverseName.includes(normalizedSearchTerm)) {
+            return true;
+        }
+        
+        // 3. Le nom ou prénom correspond exactement
+        if (normalizedNom === normalizedSearchTerm || 
+            normalizedPrenom === normalizedSearchTerm) {
+            return true;
+        }
+        
+        // 4. Le nom ou prénom contient le terme de recherche
+        if (normalizedNom.includes(normalizedSearchTerm) || 
+            normalizedPrenom.includes(normalizedSearchTerm)) {
+            return true;
+        }
+        
+        // 5. Recherche approximative (tolérance aux fautes de frappe)
+        // Utile pour les noms mal orthographiés
+        if (isApproximateMatch(normalizedNom, normalizedSearchTerm) || 
+            isApproximateMatch(normalizedPrenom, normalizedSearchTerm)) {
+            return true;
+        }
+        
+        // 6. Le terme de recherche contient le nom (cas où l'utilisateur tape plus que le nom)
+        if (normalizedSearchTerm.includes(normalizedNom) && normalizedNom.length > 3) {
+            return true;
+        }
+        
+        return false;
+    });
+    
+    if (foundGuests.length > 0) {
+        if (foundGuests.length === 1) {
+            // Un seul invité trouvé
+            displayGuestResult(foundGuests[0]);
+        } else {
+            // Plusieurs invités trouvés - afficher une liste de choix
+            displayMultipleGuestsResults(foundGuests);
+        }
+    } else {
+        // Aucun résultat - suggestions
+        showErrorWithSuggestions(searchTerm);
+    }
+}
 
         // ===== AFFICHAGE DU RÉSULTAT DE RECHERCHE =====
         function displayGuestResult(guest) {
@@ -1829,6 +2004,7 @@
     </script>
 </body>
 </html>
+
 
 
 
