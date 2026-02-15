@@ -1269,9 +1269,11 @@
         </div>
     </footer>
 
+   
     <script>
         // ===== DONNÉES DES INVITÉS AVEC STATUT DE PRÉSENCE =====
-       let guests = [
+       // Liste complète des invités pour le mariage
+let guests = [
     // TABLE 17
     { id: 1, nom: "Mavoungou", prenom: "(Air force)", table: 17 },
     { id: 2, nom: "Bakekolo", prenom: "Prince", table: 17 },
@@ -1529,7 +1531,8 @@
         }
 
         // ===== FONCTION DE RECHERCHE AMÉLIORÉE =====
-      function searchGuest() {
+        // ===== FONCTION DE RECHERCHE AMÉLIORÉE =====
+function searchGuest() {
     const searchTerm = searchInput.value.trim();
     
     // Masquer les résultats précédents
@@ -1611,22 +1614,222 @@
     }
 }
 
-        // ===== AFFICHAGE DU RÉSULTAT DE RECHERCHE =====
+// ===== FONCTIONS UTILITAIRES =====
+
+/**
+ * Normalise une chaîne de caractères :
+ * - Supprime les accents
+ * - Met en minuscules
+ * - Supprime les espaces multiples
+ * - Supprime la ponctuation
+ */
+function normalizeString(str) {
+    if (!str) return '';
+    
+    return str
+        .toLowerCase()
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '') // Supprime les accents
+        .replace(/[-\s]+/g, ' ')          // Remplace les tirets et espaces multiples par un espace
+        .replace(/[^\w\s]/g, '')           // Supprime la ponctuation
+        .trim();
+}
+
+/**
+ * Recherche approximative (tolérance aux fautes de frappe)
+ * Utilise la distance de Levenshtein pour les noms courts
+ */
+function isApproximateMatch(str1, str2) {
+    if (!str1 || !str2) return false;
+    if (str1.length < 3 || str2.length < 3) return false;
+    
+    // Distance de Levenshtein simplifiée
+    const maxDistance = 2; // Tolérance de 2 caractères différents
+    
+    // Si les chaînes sont très différentes en longueur, ignorer
+    if (Math.abs(str1.length - str2.length) > maxDistance) return false;
+    
+    let distance = 0;
+    const minLength = Math.min(str1.length, str2.length);
+    
+    for (let i = 0; i < minLength; i++) {
+        if (str1[i] !== str2[i]) distance++;
+        if (distance > maxDistance) return false;
+    }
+    
+    distance += Math.abs(str1.length - str2.length);
+    return distance <= maxDistance;
+}
+
+/**
+ * Affiche les résultats quand plusieurs invités correspondent
+ */
+function displayMultipleGuestsResults(guestsList) {
+    // Limiter à 10 résultats pour ne pas surcharger
+    const displayGuests = guestsList.slice(0, 10);
+    const hasMore = guestsList.length > 10;
+    
+    let guestsHTML = '';
+    displayGuests.forEach(guest => {
+        guestsHTML += `
+            <div class="guest-suggestion-item p-4 border-b border-gray-100 hover:bg-gold-pale cursor-pointer transition"
+                 onclick='selectGuest(${JSON.stringify(guest).replace(/'/g, "\\'")})'>
+                <div class="flex items-center justify-between">
+                    <div>
+                        <span class="font-semibold">${escapeHtml(guest.prenom)} ${escapeHtml(guest.nom)}</span>
+                        <span class="text-sm text-gray-500 ml-2">Table ${guest.table}</span>
+                    </div>
+                    <i class="fas fa-chevron-right text-gold"></i>
+                </div>
+            </div>
+        `;
+    });
+    
+    const resultHTML = `
+        <div class="bg-white border border-gold-light rounded-xl shadow-lg overflow-hidden">
+            <div class="bg-gold-pale p-4 border-b border-gold-light">
+                <h3 class="heading-font text-xl font-bold gold-text">
+                    <i class="fas fa-users mr-2"></i>
+                    ${guestsList.length} invités trouvés
+                </h3>
+                <p class="text-sm text-gray-600">Plusieurs personnes correspondent à votre recherche</p>
+            </div>
+            <div class="max-h-96 overflow-y-auto">
+                ${guestsHTML}
+            </div>
+            ${hasMore ? `
+                <div class="p-4 text-center text-sm text-gray-500 border-t border-gray-100">
+                    Et ${guestsList.length - 10} autres...
+                </div>
+            ` : ''}
+        </div>
+    `;
+    
+    searchResult.innerHTML = resultHTML;
+    searchResult.classList.remove('hidden');
+}
+
+/**
+ * Sélectionne un invité parmi la liste multiple
+ */
+function selectGuest(guest) {
+    displayGuestResult(guest);
+    // Optionnel : remplir le champ de recherche avec le nom sélectionné
+    searchInput.value = `${guest.prenom} ${guest.nom}`.trim();
+}
+
+/**
+ * Affiche un message d'erreur avec des suggestions
+ */
+function showErrorWithSuggestions(searchTerm) {
+    const normalizedTerm = normalizeString(searchTerm);
+    
+    // Trouver des suggestions proches
+    const suggestions = guests
+        .map(guest => {
+            const fullName = `${guest.prenom} ${guest.nom}`.trim();
+            const normalizedFullName = normalizeString(fullName);
+            
+            // Calculer un score de similarité simple
+            let score = 0;
+            if (normalizedFullName.includes(normalizedTerm)) score += 10;
+            if (normalizedTerm.includes(normalizedFullName)) score += 5;
+            
+            // Distance de Levenshtein approximative
+            if (Math.abs(normalizedFullName.length - normalizedTerm.length) <= 3) {
+                let commonChars = 0;
+                for (let char of normalizedTerm) {
+                    if (normalizedFullName.includes(char)) commonChars++;
+                }
+                score += commonChars;
+            }
+            
+            return { guest, score };
+        })
+        .filter(item => item.score > 3) // Garder seulement les suggestions pertinentes
+        .sort((a, b) => b.score - a.score)
+        .slice(0, 5) // Top 5 suggestions
+        .map(item => item.guest);
+    
+    let suggestionsHTML = '';
+    if (suggestions.length > 0) {
+        suggestionsHTML = `
+            <div class="mt-6">
+                <p class="text-sm font-medium text-gray-600 mb-3">Suggestions :</p>
+                <div class="flex flex-wrap gap-2">
+                    ${suggestions.map(guest => `
+                        <button onclick="suggestedSearch('${escapeHtml(guest.prenom)} ${escapeHtml(guest.nom)}')"
+                                class="px-4 py-2 bg-white border border-gold-light rounded-full text-sm hover:bg-gold-pale transition">
+                            ${escapeHtml(guest.prenom)} ${escapeHtml(guest.nom)}
+                        </button>
+                    `).join('')}
+                </div>
+            </div>
+        `;
+    }
+    
+    const errorHTML = `
+        <div class="alert-error p-6 rounded-xl text-center">
+            <div class="text-5xl text-red-300 mb-4">
+                <i class="fas fa-user-slash"></i>
+            </div>
+            <h3 class="heading-font text-xl font-bold text-red-700 mb-2">
+                Invité non trouvé
+            </h3>
+            <p class="text-red-600 mb-4">
+                Désolé, "${escapeHtml(searchTerm)}" ne figure pas sur la liste des invités.
+            </p>
+            <p class="text-sm text-red-500 mb-4">
+                Vérifiez l'orthographe ou essayez avec le nom de famille seulement.
+            </p>
+            ${suggestionsHTML}
+            <div class="mt-6">
+                <button onclick="searchInput.value = ''; searchInput.focus()" 
+                        class="text-sm text-gray-500 hover:text-gold transition">
+                    <i class="fas fa-redo mr-1"></i> Nouvelle recherche
+                </button>
+            </div>
+        </div>
+    `;
+    
+    errorMessage.innerHTML = errorHTML;
+    errorMessage.classList.remove('hidden');
+}
+
+/**
+ * Fonction utilitaire pour échapper les caractères HTML
+ */
+function escapeHtml(text) {
+    if (!text) return '';
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+}
+
+/**
+ * Recherche rapide depuis une suggestion
+ */
+function suggestedSearch(name) {
+    searchInput.value = name;
+    searchGuest();
+}
+
+        // ===== AFFICHAGE DU RÉSULTAT DE RECHERCHE AVEC BOUTON D'ENTRÉE =====
         function displayGuestResult(guest) {
             const statusClass = guest.estEntré ? 'status-entered' : 'status-absent';
             const statusText = guest.estEntré ? 'Déjà entré' : 'Pas encore entré';
             const statusIcon = guest.estEntré ? 'fa-check-circle' : 'fa-hourglass-half';
             
             const resultHTML = `
-                <div class="bg-white rounded-2xl p-4 sm:p-8 shadow-lg border ${guest.estEntré ? 'border-blue-200' : 'border-yellow-200'}">
-                    <div class="flex flex-col lg:flex-row justify-between items-center gap-6">
-                        <div class="flex flex-col sm:flex-row items-center gap-6 text-center sm:text-left">
-                            <div class="w-16 h-16 sm:w-20 sm:h-20 ${guest.estEntré ? 'bg-blue-100' : 'bg-yellow-100'} rounded-full flex items-center justify-center">
-                                <i class="fas ${guest.estEntré ? 'fa-check-circle text-blue-600' : 'fa-user text-yellow-600'} text-2xl sm:text-3xl"></i>
+                <div class="bg-white rounded-2xl p-8 shadow-lg border ${guest.estEntré ? 'border-blue-200' : 'border-yellow-200'}">
+                    <div class="flex flex-col md:flex-row justify-between items-center gap-6">
+                        <div class="flex items-center gap-6">
+                            <div class="w-20 h-20 ${guest.estEntré ? 'bg-blue-100' : 'bg-yellow-100'} rounded-full flex items-center justify-center">
+                                <i class="fas ${guest.estEntré ? 'fa-check-circle text-blue-600' : 'fa-user text-yellow-600'} text-3xl"></i>
                             </div>
                             <div>
-                                <h3 class="heading-font text-xl sm:text-2xl font-bold mb-2">${guest.prenom} ${guest.nom}</h3>
-                                <div class="flex flex-wrap justify-center sm:justify-start items-center gap-4">
+                                <h3 class="heading-font text-2xl font-bold mb-2">${guest.prenom} ${guest.nom}</h3>
+                                <div class="flex items-center gap-4">
                                     <span class="status-badge ${statusClass}">
                                         <i class="fas ${statusIcon}"></i>
                                         ${statusText}
@@ -1646,13 +1849,13 @@
                         
                         ${!guest.estEntré ? `
                             <button onclick="marquerEntree(${guest.id})" 
-                                    class="btn-gold px-6 sm:px-8 py-3 sm:py-4 rounded-xl font-semibold whitespace-nowrap w-full sm:w-auto transform hover:scale-105 transition-all duration-300">
+                                    class="btn-gold px-8 py-4 rounded-xl font-semibold whitespace-nowrap">
                                 <i class="fas fa-sign-in-alt mr-2"></i>
                                 Marquer l'entrée
                             </button>
                         ` : `
                             <button disabled 
-                                    class="px-6 sm:px-8 py-3 sm:py-4 bg-gray-100 text-gray-400 rounded-xl font-semibold cursor-not-allowed w-full sm:w-auto">
+                                    class="px-8 py-4 bg-gray-100 text-gray-400 rounded-xl font-semibold cursor-not-allowed">
                                 <i class="fas fa-check-circle mr-2"></i>
                                 Déjà enregistré
                             </button>
@@ -1665,7 +1868,7 @@
             searchResult.classList.remove('hidden');
         }
 
-        // ===== AFFICHAGE DE LA LISTE DES INVITÉS =====
+        // ===== AFFICHAGE DE LA LISTE DES INVITÉS AVEC STATUTS =====
         function renderGuestList() {
             if (!guestList) return;
             
@@ -1687,27 +1890,42 @@
             
             sortedGuests.forEach(guest => {
                 const row = document.createElement('tr');
-                row.className = 'hover:bg-gray-50 transition-all duration-300';
+                row.className = 'hover:bg-gray-50 transition';
                 
                 const statusClass = guest.estEntré ? 'status-present' : 'status-absent';
                 const statusText = guest.estEntré ? 'Présent' : 'Absent';
                 const statusIcon = guest.estEntré ? 'fa-check-circle' : 'fa-hourglass-half';
                 
                 row.innerHTML = `
-                    <td class="p-3 sm:p-4 text-xs sm:text-sm font-medium">${guest.nom}</td>
-                    <td class="p-3 sm:p-4 text-xs sm:text-sm">${guest.prenom}</td>
-                    <td class="p-3 sm:p-4">
-                        <span class="inline-flex items-center justify-center w-6 h-6 sm:w-8 sm:h-8 bg-gold-pale rounded-full text-gold font-bold text-xs sm:text-sm">
+                    <td class="p-4 font-medium">${guest.nom}</td>
+                    <td class="p-4">${guest.prenom}</td>
+                    <td class="p-4">
+                        <span class="inline-flex items-center justify-center w-8 h-8 bg-gold-pale rounded-full text-gold font-bold text-sm">
                             ${guest.table}
                         </span>
                     </td>
-                    <td class="p-3 sm:p-4">
-                        <span class="status-badge ${statusClass} text-xs">
+                    <td class="p-4">
+                        <span class="status-badge ${statusClass}">
                             <i class="fas ${statusIcon}"></i>
                             ${statusText}
                         </span>
                     </td>
-    
+                    <td class="p-4">
+                        ${!guest.estEntré ? `
+                            <button onclick="marquerEntree(${guest.id})" 
+                                    class="text-green-600 hover:text-green-800 hover:bg-green-50 p-2 rounded-lg transition">
+                                <i class="fas fa-sign-in-alt"></i>
+                            </button>
+                        ` : `
+                            <span class="text-gray-400 p-2">
+                                <i class="fas fa-check-circle"></i>
+                            </span>
+                        `}
+                        <button onclick="deleteGuest(${guest.id})" 
+                                class="text-red-500 hover:text-red-700 hover:bg-red-50 p-2 rounded-lg transition ml-2">
+                            <i class="fas fa-trash-alt"></i>
+                        </button>
+                    </td>
                 `;
                 guestList.appendChild(row);
             });
@@ -1769,7 +1987,7 @@
             errorMessage.classList.remove('hidden');
         }
 
-        // ===== GESTION DES INVITÉS =====
+        // ===== GESTION DES INVITÉS (ADMIN) =====
         function addGuest() {
             const nom = nomInput.value.trim();
             const prenom = prenomInput.value.trim();
@@ -1822,114 +2040,9 @@
             }
         }
 
-        // ===== FONCTIONS DE TÉLÉCHARGEMENT =====
-        function generateAndDownloadGuestList() {
-            if (!isAuthenticated) {
-                alert("Vous devez être connecté en tant qu'organisateur pour télécharger la liste des invités.");
-                showAuthModal();
-                return;
-            }
-            
-            const totalGuests = guests.length;
-            const enteredGuests = guests.filter(g => g.estEntré).length;
-            const pendingGuests = totalGuests - enteredGuests;
-            
-            let content = `
-                <html>
-                <head>
-                    <meta charset="UTF-8">
-                    <title>Liste des invités - Mariage 22 Février 2025</title>
-                    <style>
-                        body { font-family: 'Times New Roman', serif; margin: 2cm; }
-                        h1 { color: #C5A059; text-align: center; }
-                        table { width: 100%; border-collapse: collapse; }
-                        th { background: #C5A059; color: white; padding: 10px; }
-                        td { padding: 8px; border-bottom: 1px solid #ddd; }
-                        .present { color: green; }
-                        .absent { color: orange; }
-                    </style>
-                </head>
-                <body>
-                    <h1>MARIAGE - 22 FÉVRIER 2025</h1>
-                    <h2>Liste des invités</h2>
-                    
-                    <p>Total invités : ${totalGuests}</p>
-                    <p>Déjà entrés : ${enteredGuests}</p>
-                    <p>En attente : ${pendingGuests}</p>
-                    
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Nom</th>
-                                <th>Prénom</th>
-                                <th>Table</th>
-                                <th>Statut</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-            `;
-            
-            guests.sort((a, b) => a.nom.localeCompare(b.nom)).forEach(guest => {
-                const statusClass = guest.estEntré ? 'present' : 'absent';
-                const statusText = guest.estEntré ? 'PRÉSENT' : 'ABSENT';
-                
-                content += `
-                    <tr>
-                        <td>${guest.nom}</td>
-                        <td>${guest.prenom}</td>
-                        <td>${guest.table}</td>
-                        <td class="${statusClass}">${statusText}</td>
-                    </tr>
-                `;
-            });
-            
-            content += `
-                        </tbody>
-                    </table>
-                    <p>Document généré le ${new Date().toLocaleDateString('fr-FR')}</p>
-                </body>
-                </html>
-            `;
-            
-            const blob = new Blob([content], { type: 'application/msword' });
-            const url = window.URL.createObjectURL(blob);
-            const link = document.createElement('a');
-            link.href = url;
-            link.download = `Liste_Invites_Mariage_${new Date().toISOString().split('T')[0]}.doc`;
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-            window.URL.revokeObjectURL(url);
-        }
-
-        function exportToExcel() {
-            if (!isAuthenticated) {
-                alert("Vous devez être connecté pour exporter les données.");
-                showAuthModal();
-                return;
-            }
-            
-            let csv = "Nom,Prénom,Table,Statut\n";
-            
-            guests.sort((a, b) => a.nom.localeCompare(b.nom)).forEach(guest => {
-                const statut = guest.estEntré ? 'Présent' : 'Absent';
-                csv += `"${guest.nom}","${guest.prenom}",${guest.table},"${statut}"\n`;
-            });
-            
-            const blob = new Blob(['\uFEFF' + csv], { type: 'text/csv;charset=utf-8;' });
-            const url = window.URL.createObjectURL(blob);
-            const link = document.createElement('a');
-            link.href = url;
-            link.download = `Liste_Invites_${new Date().toISOString().split('T')[0]}.csv`;
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-            window.URL.revokeObjectURL(url);
-        }
-
         // ===== ANIMATIONS AU SCROLL =====
         function revealElements() {
-            const reveals = document.querySelectorAll('.reveal, .reveal-left, .reveal-right');
+            const reveals = document.querySelectorAll('.reveal');
             reveals.forEach(element => {
                 const windowHeight = window.innerHeight;
                 const elementTop = element.getBoundingClientRect().top;
@@ -1971,11 +2084,6 @@
         logoutBtn.addEventListener('click', logout);
         addGuestButton.addEventListener('click', addGuest);
 
-        const exportBtn = document.getElementById('exportExcelBtn');
-        if (exportBtn) {
-            exportBtn.addEventListener('click', exportToExcel);
-        }
-
         // Rendre les fonctions accessibles globalement
         window.marquerEntree = marquerEntree;
         window.deleteGuest = deleteGuest;
@@ -1994,13 +2102,247 @@
                 const target = document.querySelector(this.getAttribute('href'));
                 if (target) {
                     target.scrollIntoView({ behavior: 'smooth' });
-                    // Fermer le menu mobile si ouvert
-                    if (!mobileMenu.classList.contains('hidden')) {
-                        mobileMenu.classList.add('hidden');
-                    }
                 }
             });
         });
+
+
+
+        // ===== FONCTIONS DE TÉLÉCHARGEMENT =====
+
+/**
+ * Génère et télécharge la liste des invités au format Word
+ */
+function generateAndDownloadGuestList() {
+    // Vérifier si l'utilisateur est authentifié
+    if (!isAuthenticated) {
+        alert("Vous devez être connecté en tant qu'organisateur pour télécharger la liste des invités.");
+        showAuthModal();
+        return;
+    }
+    
+    // Compter les présents
+    const totalGuests = guests.length;
+    const enteredGuests = guests.filter(g => g.estEntré).length;
+    const pendingGuests = totalGuests - enteredGuests;
+    
+    // Créer le contenu du document Word (format HTML)
+    let content = `
+        <html xmlns:v="urn:schemas-microsoft-com:vml"
+              xmlns:o="urn:schemas-microsoft-com:office:office"
+              xmlns:w="urn:schemas-microsoft-com:office:word"
+              xmlns:m="http://schemas.microsoft.com/office/2004/12/omml"
+              xmlns="http://www.w3.org/TR/REC-html40">
+        <head>
+            <meta charset="UTF-8">
+            <title>Liste des invités - Mariage 22 Février 2025</title>
+            <style>
+                body { 
+                    font-family: 'Times New Roman', serif; 
+                    margin: 2cm;
+                    color: #333;
+                }
+                h1 { 
+                    color: #C5A059; 
+                    text-align: center;
+                    border-bottom: 2px solid #C5A059;
+                    padding-bottom: 10px;
+                }
+                h2 { color: #2C2C2C; }
+                .stats { 
+                    background: #f5f5f5; 
+                    padding: 15px; 
+                    border-radius: 5px;
+                    margin: 20px 0;
+                }
+                table { 
+                    width: 100%; 
+                    border-collapse: collapse; 
+                    margin-top: 20px;
+                }
+                th { 
+                    background: #C5A059; 
+                    color: white; 
+                    padding: 10px; 
+                    text-align: left;
+                }
+                td { 
+                    padding: 8px; 
+                    border-bottom: 1px solid #ddd;
+                }
+                .present { color: green; font-weight: bold; }
+                .absent { color: orange; font-weight: bold; }
+                .footer { 
+                    margin-top: 30px; 
+                    font-style: italic;
+                    text-align: center;
+                    color: #666;
+                }
+                .table-badge {
+                    background: #C5A059;
+                    color: white;
+                    padding: 3px 8px;
+                    border-radius: 20px;
+                    font-size: 12px;
+                }
+            </style>
+        </head>
+        <body>
+            <h1>MARIAGE - 22 FÉVRIER 2025</h1>
+            <h2 style="text-align: center;">Liste des invités et gestion des présences</h2>
+            
+            <div class="stats">
+                <h3>Récapitulatif des présences</h3>
+                <p><strong>Total invités :</strong> ${totalGuests}</p>
+                <p><strong>Déjà entrés :</strong> ${enteredGuests}</p>
+                <p><strong>Pas encore entrés :</strong> ${pendingGuests}</p>
+                <p><strong>Taux de présence :</strong> ${totalGuests > 0 ? Math.round((enteredGuests / totalGuests) * 100) : 0}%</p>
+            </div>
+            
+            <h3>Liste détaillée des invités</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>N°</th>
+                        <th>Nom</th>
+                        <th>Prénom</th>
+                        <th>Table</th>
+                        <th>Statut</th>
+                        <th>Heure d'entrée</th>
+                    </tr>
+                </thead>
+                <tbody>
+    `;
+    
+    // Ajouter chaque invité
+    guests.sort((a, b) => a.nom.localeCompare(b.nom)).forEach((guest, index) => {
+        const statusClass = guest.estEntré ? 'present' : 'absent';
+        const statusText = guest.estEntré ? 'PRÉSENT' : 'ABSENT';
+        const heureText = guest.estEntré && guest.heureEntrée 
+            ? new Date(guest.heureEntrée).toLocaleTimeString('fr-FR') 
+            : '-';
+        
+        content += `
+            <tr>
+                <td>${index + 1}</td>
+                <td>${guest.nom}</td>
+                <td>${guest.prenom}</td>
+                <td><span class="table-badge">Table ${guest.table}</span></td>
+                <td class="${statusClass}">${statusText}</td>
+                <td>${heureText}</td>
+            </tr>
+        `;
+    });
+    
+    // Ajouter un récapitulatif par table
+    content += `
+                </tbody>
+            </table>
+            
+            <h3 style="margin-top: 30px;">Répartition par table</h3>
+    `;
+    
+    // Grouper par table
+    const tables = {};
+    guests.forEach(guest => {
+        if (!tables[guest.table]) tables[guest.table] = [];
+        tables[guest.table].push(guest);
+    });
+    
+    content += '<ul>';
+    for (let table = 1; table <= 30; table++) {
+        if (tables[table] && tables[table].length > 0) {
+            const presents = tables[table].filter(g => g.estEntré).length;
+            content += `<li><strong>Table ${table}:</strong> ${tables[table].length} personnes (${presents} présents)</li>`;
+        }
+    }
+    content += '</ul>';
+    
+    // Ajouter les dernières entrées
+    if (entryHistory.length > 0) {
+        content += `
+            <h3 style="margin-top: 30px;">Dernières entrées enregistrées</h3>
+            <ul>
+        `;
+        
+        entryHistory.slice(0, 10).forEach(entry => {
+            content += `<li>${entry.heure} - ${entry.prenom} ${entry.nom}</li>`;
+        });
+        
+        content += '</ul>';
+    }
+    
+    // Pied de page
+    const now = new Date();
+    const dateStr = now.toLocaleDateString('fr-FR') + ' à ' + now.toLocaleTimeString('fr-FR');
+    
+    content += `
+            <div class="footer">
+                <p>Document généré le ${dateStr}</p>
+                <p>✧ Mariage de mon Frère - 22 Février 2025 ✧</p>
+            </div>
+        </body>
+        </html>
+    `;
+    
+    // Créer et télécharger le fichier
+    const blob = new Blob([content], { type: 'application/msword' });
+    const url = window.URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = `Liste_Invites_Mariage_${new Date().toISOString().split('T')[0]}.doc`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    window.URL.revokeObjectURL(url);
+}
+
+/**
+ * Exporte la liste des invités au format Excel (CSV)
+ */
+function exportToExcel() {
+    if (!isAuthenticated) {
+        alert("Vous devez être connecté pour exporter les données.");
+        showAuthModal();
+        return;
+    }
+    
+    // Créer le contenu CSV
+    let csv = "Nom,Prénom,Table,Statut,Heure d'entrée\n";
+    
+    guests.sort((a, b) => a.nom.localeCompare(b.nom)).forEach(guest => {
+        const statut = guest.estEntré ? 'Présent' : 'Absent';
+        const heure = guest.estEntré && guest.heureEntrée 
+            ? new Date(guest.heureEntrée).toLocaleTimeString('fr-FR') 
+            : '';
+        csv += `"${guest.nom}","${guest.prenom}",${guest.table},"${statut}","${heure}"\n`;
+    });
+    
+    // Ajouter les statistiques
+    csv += '\n\nSTATISTIQUES\n';
+    csv += `Total invités,${guests.length}\n`;
+    csv += `Déjà entrés,${guests.filter(g => g.estEntré).length}\n`;
+    csv += `Pas encore entrés,${guests.filter(g => !g.estEntré).length}\n`;
+    
+    // Télécharger
+    const blob = new Blob(['\uFEFF' + csv], { type: 'text/csv;charset=utf-8;' }); // \uFEFF pour UTF-8 avec BOM
+    const url = window.URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = `Liste_Invites_${new Date().toISOString().split('T')[0]}.csv`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    window.URL.revokeObjectURL(url);
+}
+
+// Ajouter l'event listener pour le bouton Excel
+document.addEventListener('DOMContentLoaded', function() {
+    const exportBtn = document.getElementById('exportExcelBtn');
+    if (exportBtn) {
+        exportBtn.addEventListener('click', exportToExcel);
+    }
+});
     </script>
 </body>
 </html>
