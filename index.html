@@ -1348,43 +1348,87 @@
         }
 
         // Recherche principale
-        function searchGuest() {
-            const term = searchInput.value.trim();
-            
-            searchResult.classList.add('hidden');
-            errorMessage.classList.add('hidden');
-            
-            if (!term) {
-                showError("Veuillez entrer un nom.");
-                return;
-            }
-            
-            const normTerm = normalizeString(term);
-            
-            const found = guests.filter(guest => {
-                const full = normalizeString(`${guest.prenom} ${guest.nom}`);
-                const reverse = normalizeString(`${guest.nom} ${guest.prenom}`);
-                const nom = normalizeString(guest.nom);
-                const prenom = normalizeString(guest.prenom);
-                
-                return full === normTerm || reverse === normTerm ||
-                       full.includes(normTerm) || reverse.includes(normTerm) ||
-                       nom === normTerm || prenom === normTerm ||
-                       nom.includes(normTerm) || prenom.includes(normTerm) ||
-                       isApproximateMatch(nom, normTerm) || isApproximateMatch(prenom, normTerm);
-            });
-            
-            if (found.length === 0) {
-                showErrorWithSuggestions(term);
-                return;
-            }
-            
-            if (found.length === 1) {
-                displayGuestResult(found[0]);
-            } else {
-                displayMultipleResults(found);
-            }
+       function searchGuest() {
+    const searchTerm = searchInput.value.trim();
+    
+    // Masquer les résultats précédents
+    searchResult.classList.add('hidden');
+    errorMessage.classList.add('hidden');
+    
+    if (!searchTerm) {
+        showError("Veuillez entrer un nom ou prénom pour la recherche.");
+        return;
+    }
+    
+    // Normaliser le terme de recherche (enlever accents, espaces multiples, mettre en minuscule)
+    const normalizedSearchTerm = normalizeString(searchTerm);
+    
+    // Recherche avec plusieurs algorithmes de correspondance
+    const foundGuests = guests.filter(guest => {
+        // Créer différentes versions du nom de l'invité pour la comparaison
+        const guestFullName = `${guest.prenom} ${guest.nom}`.trim();
+        const guestReverseName = `${guest.nom} ${guest.prenom}`.trim();
+        const guestNomOnly = guest.nom;
+        const guestPrenomOnly = guest.prenom;
+        
+        // Normaliser toutes les versions
+        const normalizedFullName = normalizeString(guestFullName);
+        const normalizedReverseName = normalizeString(guestReverseName);
+        const normalizedNom = normalizeString(guestNomOnly);
+        const normalizedPrenom = normalizeString(guestPrenomOnly);
+        
+        // 1. Correspondance exacte (après normalisation)
+        if (normalizedFullName === normalizedSearchTerm || 
+            normalizedReverseName === normalizedSearchTerm) {
+            return true;
         }
+        
+        // 2. Le terme de recherche est contenu dans le nom complet
+        if (normalizedFullName.includes(normalizedSearchTerm) || 
+            normalizedReverseName.includes(normalizedSearchTerm)) {
+            return true;
+        }
+        
+        // 3. Le nom ou prénom correspond exactement
+        if (normalizedNom === normalizedSearchTerm || 
+            normalizedPrenom === normalizedSearchTerm) {
+            return true;
+        }
+        
+        // 4. Le nom ou prénom contient le terme de recherche
+        if (normalizedNom.includes(normalizedSearchTerm) || 
+            normalizedPrenom.includes(normalizedSearchTerm)) {
+            return true;
+        }
+        
+        // 5. Recherche approximative (tolérance aux fautes de frappe)
+        // Utile pour les noms mal orthographiés
+        if (isApproximateMatch(normalizedNom, normalizedSearchTerm) || 
+            isApproximateMatch(normalizedPrenom, normalizedSearchTerm)) {
+            return true;
+        }
+        
+        // 6. Le terme de recherche contient le nom (cas où l'utilisateur tape plus que le nom)
+        if (normalizedSearchTerm.includes(normalizedNom) && normalizedNom.length > 3) {
+            return true;
+        }
+        
+        return false;
+    });
+    
+    if (foundGuests.length > 0) {
+        if (foundGuests.length === 1) {
+            // Un seul invité trouvé
+            displayGuestResult(foundGuests[0]);
+        } else {
+            // Plusieurs invités trouvés - afficher une liste de choix
+            displayMultipleGuestsResults(foundGuests);
+        }
+    } else {
+        // Aucun résultat - suggestions
+        showErrorWithSuggestions(searchTerm);
+    }
+}
 
         // Afficher résultat unique
         function displayGuestResult(guest) {
@@ -1777,3 +1821,4 @@
     </script>
 </body>
 </html>
+
