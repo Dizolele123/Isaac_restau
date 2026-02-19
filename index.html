@@ -100,36 +100,14 @@
             100% { box-shadow: 0 0 0 0 rgba(197, 160, 89, 0); }
         }
         
-        @keyframes fadeInUp {
+        @keyframes slideIn {
             from {
                 opacity: 0;
-                transform: translateY(30px);
+                transform: translateY(-10px);
             }
             to {
                 opacity: 1;
                 transform: translateY(0);
-            }
-        }
-        
-        @keyframes fadeInLeft {
-            from {
-                opacity: 0;
-                transform: translateX(-30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-        
-        @keyframes fadeInRight {
-            from {
-                opacity: 0;
-                transform: translateX(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
             }
         }
         
@@ -139,6 +117,10 @@
         
         .pulse-gold {
             animation: pulse-gold 2s infinite;
+        }
+        
+        .slide-in {
+            animation: slideIn 0.3s ease;
         }
         
         /* ===== COULEURS ===== */
@@ -331,7 +313,7 @@
             }
         }
         
-        /* ===== TABLEAU DES INVITÉS - VERSION STABLE ===== */
+        /* ===== TABLEAU DES INVITÉS - VERSION OPTIMISÉE SANS COLONNE TABLE ===== */
         .table-wrapper {
             width: 100%;
             overflow-x: auto;
@@ -343,7 +325,7 @@
         }
         
         .guest-table {
-            min-width: 650px;
+            min-width: 500px;
             width: 100%;
             border-collapse: collapse;
             background: white;
@@ -369,19 +351,6 @@
             background-color: var(--gold-pale);
         }
         
-        .guest-table .table-badge {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            width: 2rem;
-            height: 2rem;
-            background: linear-gradient(145deg, var(--gold), #B38B4A);
-            color: white;
-            border-radius: 9999px;
-            font-weight: 600;
-            font-size: 0.875rem;
-        }
-        
         @media (max-width: 640px) {
             .guest-table th {
                 padding: 0.75rem 0.625rem;
@@ -392,30 +361,47 @@
                 padding: 0.75rem 0.625rem;
                 font-size: 0.75rem;
             }
-            
-            .guest-table .table-badge {
-                width: 1.75rem;
-                height: 1.75rem;
-                font-size: 0.75rem;
-            }
+        }
+        
+        /* ===== SUGGESTIONS DE RECHERCHE ===== */
+        .suggestions-container {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: white;
+            border: 1px solid var(--gold-light);
+            border-radius: 0.75rem;
+            box-shadow: 0 10px 30px var(--shadow);
+            z-index: 50;
+            max-height: 300px;
+            overflow-y: auto;
+            margin-top: 0.5rem;
+        }
+        
+        .suggestion-item {
+            padding: 0.75rem 1rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border-bottom: 1px solid #f1f1f1;
+        }
+        
+        .suggestion-item:last-child {
+            border-bottom: none;
+        }
+        
+        .suggestion-item:hover {
+            background-color: var(--gold-pale);
+            transform: translateX(5px);
+        }
+        
+        .suggestion-highlight {
+            background-color: rgba(197, 160, 89, 0.1);
+            font-weight: 600;
+            color: var(--gold);
         }
         
         /* ===== CARTES D'ÉVÉNEMENTS ===== */
-        .event-card {
-            background: white;
-            border-radius: 1rem;
-            padding: 1.5rem;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-            transition: all 0.3s ease;
-            border: 1px solid rgba(197, 160, 89, 0.1);
-            height: 100%;
-        }
-        
-        .event-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 20px 40px var(--shadow);
-        }
-        
         .image-frame {
             position: relative;
             border-radius: 1rem;
@@ -531,7 +517,7 @@
 
     <!-- MODAL D'AUTHENTIFICATION -->
     <div id="authModal" class="auth-modal hidden fixed inset-0 z-[100] flex items-center justify-center p-4">
-        <div class="bg-white rounded-2xl max-w-md w-full p-6 sm:p-8 relative" style="animation: fadeInUp 0.3s ease;">
+        <div class="bg-white rounded-2xl max-w-md w-full p-6 sm:p-8 relative slide-in">
             <div class="absolute -top-6 left-1/2 transform -translate-x-1/2">
                 <div class="w-14 h-14 sm:w-16 sm:h-16 gold-gradient rounded-full flex items-center justify-center shadow-lg pulse-gold">
                     <i class="fas fa-lock text-white text-xl sm:text-2xl"></i>
@@ -993,14 +979,18 @@
                     </button>
                 </div>
                 
-                <!-- Barre de recherche -->
-                <div class="bg-gradient-to-br from-white to-cream rounded-xl sm:rounded-2xl p-4 sm:p-5 shadow-lg mb-6 sm:mb-8 reveal">
+                <!-- Barre de recherche avec suggestions -->
+                <div class="bg-gradient-to-br from-white to-cream rounded-xl sm:rounded-2xl p-4 sm:p-5 shadow-lg mb-6 sm:mb-8 reveal relative" id="searchContainer">
                     <div class="flex flex-col sm:flex-row gap-3">
                         <div class="flex-grow relative">
                             <i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 text-sm"></i>
                             <input type="text" id="searchInput" 
-                                   placeholder="Rechercher un invité..." 
-                                   class="w-full pl-8 sm:pl-10 pr-3 py-2 sm:py-2.5 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-gold text-sm">
+                                   placeholder="Rechercher un invité par nom ou prénom..." 
+                                   class="w-full pl-8 sm:pl-10 pr-3 py-2 sm:py-2.5 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-gold text-sm"
+                                   autocomplete="off">
+                            
+                            <!-- Conteneur des suggestions -->
+                            <div id="suggestionsContainer" class="suggestions-container hidden"></div>
                         </div>
                         <button id="searchButton" class="btn-gold px-4 sm:px-5 py-2 sm:py-2.5 rounded-lg text-sm font-semibold whitespace-nowrap">
                             <i class="fas fa-search mr-1 sm:mr-2"></i>
@@ -1015,7 +1005,7 @@
                 
                 <!-- Tableau et Timeline -->
                 <div class="grid lg:grid-cols-3 gap-4 sm:gap-6 reveal">
-                    <!-- Liste des invités -->
+                    <!-- Liste des invités (SANS colonne Table) -->
                     <div class="lg:col-span-2">
                         <div class="bg-white rounded-xl sm:rounded-2xl shadow-lg p-3 sm:p-4">
                             <h4 class="heading-font text-base sm:text-lg font-bold mb-3 flex items-center gap-2">
@@ -1030,9 +1020,6 @@
                                         <tr>
                                             <th>Nom</th>
                                             <th>Prénom</th>
-                                            <th>Table</th>
-                                            <th>Statut</th>
-                                            <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody id="guestList"></tbody>
@@ -1175,26 +1162,26 @@
             { id: 84, nom: "Pulcherie", prenom: "", table: 1, estEntré: false, heureEntrée: null },
             { id: 85, nom: "Louheko", prenom: "Tonie", table: 1, estEntré: false, heureEntrée: null },
             { id: 86, nom: "Kiafouka", prenom: "Julia", table: 1, estEntré: false, heureEntrée: null },
-            { id: 87, nom: "Apotre Dieudonné", prenom: "Couple", table: "Église", estEntré: false, heureEntrée: null },
-            { id: 88, nom: "Apotre Mbambi", prenom: "", table: "Église", estEntré: false, heureEntrée: null },
-            { id: 89, nom: "Apotre Chadrack", prenom: "", table: "Église", estEntré: false, heureEntrée: null },
-            { id: 90, nom: "Apotre Mampassi", prenom: "", table: "Église", estEntré: false, heureEntrée: null },
-            { id: 91, nom: "Predi Adrien", prenom: "Couple", table: "Église", estEntré: false, heureEntrée: null },
-            { id: 92, nom: "Predi Roland", prenom: "Couple", table: "Église", estEntré: false, heureEntrée: null },
-            { id: 93, nom: "Predi Ghyslain", prenom: "Couple", table: "Église", estEntré: false, heureEntrée: null },
-            { id: 94, nom: "Predi Heritier", prenom: "", table: "Église", estEntré: false, heureEntrée: null },
-            { id: 95, nom: "Predi Djoni", prenom: "Couple", table: "Église", estEntré: false, heureEntrée: null },
-            { id: 96, nom: "Predi Ndedi", prenom: "", table: "Église", estEntré: false, heureEntrée: null },
-            { id: 97, nom: "Predi Jethro", prenom: "", table: "Église", estEntré: false, heureEntrée: null },
-            { id: 98, nom: "Predi Guy Roger", prenom: "", table: "Église", estEntré: false, heureEntrée: null },
-            { id: 99, nom: "Predi Faustin", prenom: "Couple", table: "Église", estEntré: false, heureEntrée: null },
-            { id: 100, nom: "Predi Helombe", prenom: "", table: "Église", estEntré: false, heureEntrée: null },
-            { id: 101, nom: "Diac Angele", prenom: "", table: "Église", estEntré: false, heureEntrée: null },
-            { id: 102, nom: "Maman Malanda", prenom: "", table: "Église", estEntré: false, heureEntrée: null },
-            { id: 103, nom: "Diac Sylvie", prenom: "", table: "Église", estEntré: false, heureEntrée: null },
-            { id: 104, nom: "Diac Honorine", prenom: "", table: "Église", estEntré: false, heureEntrée: null },
-            { id: 105, nom: "Diac Virginy", prenom: "", table: "Église", estEntré: false, heureEntrée: null },
-            { id: 106, nom: "Predi Bikandou Roger", prenom: "Couple", table: "Église", estEntré: false, heureEntrée: null },
+            { id: 87, nom: "Nguimbi Dieudonné", prenom: "Couple", table: "19", estEntré: false, heureEntrée: null },
+            { id: 88, nom: "Mbambi Gustave", prenom: "", table: "19", estEntré: false, heureEntrée: null },
+            { id: 89, nom: "Apotre Chadrack", prenom: "", table: "19", estEntré: false, heureEntrée: null },
+            { id: 90, nom: "Mampassi Koumana David", prenom: "", table: "19", estEntré: false, heureEntrée: null },
+            { id: 91, nom: "Basseva Adrien", prenom: "Couple", table: "19", estEntré: false, heureEntrée: null },
+            { id: 92, nom: "Loussilabo Roland", prenom: "Couple", table: "19", estEntré: false, heureEntrée: null },
+            { id: 93, nom: "Predi Ghyslain", prenom: "Couple", table: "19", estEntré: false, heureEntrée: null },
+            { id: 94, nom: "Predi Heritier", prenom: "", table: "19", estEntré: false, heureEntrée: null },
+            { id: 95, nom: "Predi Djoni", prenom: "Couple", table: "19", estEntré: false, heureEntrée: null },
+            { id: 96, nom: "Ndedi Rochevick", prenom: "", table: "19", estEntré: false, heureEntrée: null },
+            { id: 97, nom: "Predi Jethro", prenom: "", table: "21", estEntré: false, heureEntrée: null },
+            { id: 98, nom: "Predi Guy Roger", prenom: "", table: "21", estEntré: false, heureEntrée: null },
+            { id: 99, nom: "Predi Faustin", prenom: "Couple", table: "21", estEntré: false, heureEntrée: null },
+            { id: 100, nom: "Predi Helombe", prenom: "", table: "21", estEntré: false, heureEntrée: null },
+            { id: 101, nom: "Diac Angele", prenom: "", table: "21", estEntré: false, heureEntrée: null },
+            { id: 102, nom: "Maman Malanda", prenom: "", table: "21", estEntré: false, heureEntrée: null },
+            { id: 103, nom: "Diac Sylvie", prenom: "", table: "21", estEntré: false, heureEntrée: null },
+            { id: 104, nom: "Diac Honorine", prenom: "", table: "21", estEntré: false, heureEntrée: null },
+            { id: 105, nom: "Diac Virginy", prenom: "", table: "21", estEntré: false, heureEntrée: null },
+            { id: 106, nom: "Bikandou Roger", prenom: "Couple", table: "21", estEntré: false, heureEntrée: null },
             { id: 107, nom: "Maman José", prenom: "", table: "Église", estEntré: false, heureEntrée: null }
         ];
 
@@ -1241,8 +1228,9 @@
         
         const menuToggle = document.getElementById('menu-toggle');
         const mobileMenu = document.getElementById('mobile-menu');
+        const suggestionsContainer = document.getElementById('suggestionsContainer');
 
-        // Fonctions de statistiques
+        // ===== FONCTIONS DE STATISTIQUES =====
         function updateStatistics() {
             const total = guests.length;
             const entered = guests.filter(g => g.estEntré).length;
@@ -1256,6 +1244,297 @@
             document.getElementById('guestCount') && (document.getElementById('guestCount').textContent = `(${total} invités)`);
         }
 
+        // ===== FONCTIONS DE RECHERCHE AMÉLIORÉES =====
+        
+        // Normalisation des chaînes
+        function normalizeString(str) {
+            if (!str) return '';
+            return str.toLowerCase()
+                .normalize('NFD')
+                .replace(/[\u0300-\u036f]/g, '') // Supprime les accents
+                .replace(/[-\s]+/g, ' ')         // Remplace les tirets et espaces multiples par un espace
+                .replace(/[^\w\s]/g, '')          // Supprime la ponctuation
+                .trim();
+        }
+
+        // Calcul de similarité (algorithme simple mais efficace)
+        function calculateSimilarity(str1, str2) {
+            if (!str1 || !str2) return 0;
+            
+            const s1 = normalizeString(str1);
+            const s2 = normalizeString(str2);
+            
+            if (s1 === s2) return 100;
+            if (s1.includes(s2) || s2.includes(s1)) return 80;
+            
+            // Compte les caractères communs
+            let common = 0;
+            const set1 = new Set(s1.split(''));
+            const set2 = new Set(s2.split(''));
+            
+            set1.forEach(char => {
+                if (set2.has(char)) common++;
+            });
+            
+            const maxLength = Math.max(set1.size, set2.size);
+            return maxLength > 0 ? Math.round((common / maxLength) * 50) : 0;
+        }
+
+        // Recherche de suggestions en temps réel
+        function getSuggestions(searchTerm) {
+            if (!searchTerm || searchTerm.length < 2) return [];
+            
+            const normalizedTerm = normalizeString(searchTerm);
+            
+            // Calculer un score pour chaque invité
+            const scored = guests.map(guest => {
+                const fullName = `${guest.prenom} ${guest.nom}`.trim();
+                const fullNameReverse = `${guest.nom} ${guest.prenom}`.trim();
+                const nomOnly = guest.nom;
+                const prenomOnly = guest.prenom;
+                
+                const scoreFull = calculateSimilarity(fullName, normalizedTerm);
+                const scoreReverse = calculateSimilarity(fullNameReverse, normalizedTerm);
+                const scoreNom = calculateSimilarity(nomOnly, normalizedTerm);
+                const scorePrenom = calculateSimilarity(prenomOnly, normalizedTerm);
+                
+                const maxScore = Math.max(scoreFull, scoreReverse, scoreNom, scorePrenom);
+                
+                return { guest, score: maxScore };
+            });
+            
+            // Filtrer et trier par score
+            return scored
+                .filter(item => item.score > 30)
+                .sort((a, b) => b.score - a.score)
+                .slice(0, 5)
+                .map(item => item.guest);
+        }
+
+        // Afficher les suggestions
+        function showSuggestions() {
+            const searchTerm = searchInput.value.trim();
+            const suggestions = getSuggestions(searchTerm);
+            
+            if (suggestions.length === 0 || searchTerm.length < 2) {
+                suggestionsContainer.classList.add('hidden');
+                return;
+            }
+            
+            let html = '';
+            suggestions.forEach(guest => {
+                const fullName = `${guest.prenom} ${guest.nom}`.trim();
+                const term = normalizeString(searchTerm);
+                const normalizedFullName = normalizeString(fullName);
+                
+                // Mettre en évidence la partie correspondante
+                let displayName = fullName;
+                if (term.length > 0 && normalizedFullName.includes(term)) {
+                    // Simple highlight (on peut améliorer)
+                    displayName = fullName;
+                }
+                
+                html += `
+                    <div class="suggestion-item flex justify-between items-center" onclick="selectSuggestion('${guest.prenom}', '${guest.nom}')">
+                        <div>
+                            <span class="font-medium">${guest.prenom} ${guest.nom}</span>
+                            <span class="text-xs text-gray-500 ml-2">Table ${guest.table}</span>
+                        </div>
+                        <i class="fas fa-chevron-right text-gold text-xs"></i>
+                    </div>
+                `;
+            });
+            
+            suggestionsContainer.innerHTML = html;
+            suggestionsContainer.classList.remove('hidden');
+        }
+
+        // Sélectionner une suggestion
+        function selectSuggestion(prenom, nom) {
+            searchInput.value = `${prenom} ${nom}`.trim();
+            suggestionsContainer.classList.add('hidden');
+            searchGuest(); // Lancer directement la recherche
+        }
+
+        // Recherche principale (améliorée)
+        function searchGuest() {
+            const searchTerm = searchInput.value.trim();
+            
+            // Masquer les résultats précédents
+            searchResult.classList.add('hidden');
+            errorMessage.classList.add('hidden');
+            suggestionsContainer.classList.add('hidden');
+            
+            if (!searchTerm) {
+                showError("Veuillez entrer un nom ou prénom pour la recherche.");
+                return;
+            }
+            
+            const normalizedSearchTerm = normalizeString(searchTerm);
+            
+            // Recherche avec scores
+            const foundGuests = guests.filter(guest => {
+                const fullName = `${guest.prenom} ${guest.nom}`.trim();
+                const reverseName = `${guest.nom} ${guest.prenom}`.trim();
+                const nomOnly = guest.nom;
+                const prenomOnly = guest.prenom;
+                
+                const normFull = normalizeString(fullName);
+                const normReverse = normalizeString(reverseName);
+                const normNom = normalizeString(nomOnly);
+                const normPrenom = normalizeString(prenomOnly);
+                
+                return normFull.includes(normalizedSearchTerm) ||
+                       normReverse.includes(normalizedSearchTerm) ||
+                       normNom.includes(normalizedSearchTerm) ||
+                       normPrenom.includes(normalizedSearchTerm) ||
+                       calculateSimilarity(normFull, normalizedSearchTerm) > 50 ||
+                       calculateSimilarity(normNom, normalizedSearchTerm) > 50;
+            });
+            
+            if (foundGuests.length > 0) {
+                if (foundGuests.length === 1) {
+                    displayGuestResult(foundGuests[0]);
+                } else {
+                    displayMultipleResults(foundGuests);
+                }
+            } else {
+                // Aucun résultat - suggestions améliorées
+                showIntelligentSuggestions(searchTerm);
+            }
+        }
+
+        // Suggestions intelligentes quand aucun résultat
+        function showIntelligentSuggestions(searchTerm) {
+            const suggestions = getSuggestions(searchTerm);
+            
+            let suggestionsHTML = '';
+            if (suggestions.length > 0) {
+                suggestionsHTML = `
+                    <div class="mt-4 p-4 bg-gold-pale/30 rounded-lg">
+                        <p class="text-sm font-medium text-gray-700 mb-3 flex items-center gap-2">
+                            <i class="fas fa-lightbulb gold-text"></i>
+                            Avez-vous voulu dire ?
+                        </p>
+                        <div class="flex flex-wrap gap-2">
+                            ${suggestions.map(g => `
+                                <button onclick="selectSuggestion('${g.prenom}', '${g.nom}')"
+                                        class="px-3 py-1.5 bg-white border border-gold-light rounded-full text-xs hover:bg-gold-pale transition shadow-sm">
+                                    <i class="fas fa-user mr-1"></i>
+                                    ${g.prenom} ${g.nom} <span class="text-gold text-[10px]">(Table ${g.table})</span>
+                                </button>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+            }
+            
+            errorMessage.innerHTML = `
+                <div class="text-center p-4">
+                    <div class="text-4xl text-red-300 mb-3">
+                        <i class="fas fa-user-slash"></i>
+                    </div>
+                    <p class="text-red-600 text-sm mb-2">"${searchTerm}" n'est pas dans la liste</p>
+                    <p class="text-xs text-red-500">Vérifiez l'orthographe ou consultez les suggestions ci-dessous</p>
+                    ${suggestionsHTML}
+                </div>
+            `;
+            errorMessage.classList.remove('hidden');
+        }
+
+        // Afficher résultat unique
+        function displayGuestResult(guest) {
+            const statusClass = guest.estEntré ? 'status-entered' : 'status-absent';
+            const statusText = guest.estEntré ? 'Déjà entré' : 'Pas encore entré';
+            const statusIcon = guest.estEntré ? 'fa-check-circle' : 'fa-hourglass-half';
+            
+            const html = `
+                <div class="bg-white rounded-xl p-4 sm:p-5 shadow-lg border ${guest.estEntré ? 'border-blue-200' : 'border-yellow-200'}">
+                    <div class="flex flex-col sm:flex-row items-center gap-4 sm:gap-5">
+                        <div class="flex items-center gap-3 sm:gap-4 w-full sm:w-auto">
+                            <div class="w-12 h-12 sm:w-14 sm:h-14 ${guest.estEntré ? 'bg-blue-100' : 'bg-yellow-100'} rounded-full flex items-center justify-center flex-shrink-0">
+                                <i class="fas ${guest.estEntré ? 'fa-check-circle text-blue-600' : 'fa-user text-yellow-600'} text-lg sm:text-xl"></i>
+                            </div>
+                            <div>
+                                <h3 class="heading-font text-base sm:text-lg font-bold">${guest.prenom} ${guest.nom}</h3>
+                                <div class="flex flex-wrap items-center gap-2 mt-1">
+                                    <span class="status-badge ${statusClass} text-xs">
+                                        <i class="fas ${statusIcon}"></i>
+                                        ${statusText}
+                                    </span>
+                                    <span class="text-gold text-xs flex items-center gap-1">
+                                        <i class="fas fa-chair"></i>
+                                        Table ${guest.table}
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        ${!guest.estEntré ? `
+                            <button onclick="marquerEntree(${guest.id})" 
+                                    class="btn-gold px-4 sm:px-5 py-2 rounded-lg text-sm font-semibold w-full sm:w-auto">
+                                <i class="fas fa-sign-in-alt mr-1 sm:mr-2"></i>
+                                Marquer entrée
+                            </button>
+                        ` : `
+                            <button disabled class="px-4 sm:px-5 py-2 bg-gray-100 text-gray-400 rounded-lg text-sm cursor-not-allowed w-full sm:w-auto">
+                                <i class="fas fa-check-circle mr-1 sm:mr-2"></i>
+                                Déjà entré
+                            </button>
+                        `}
+                    </div>
+                </div>
+            `;
+            
+            searchResult.innerHTML = html;
+            searchResult.classList.remove('hidden');
+        }
+
+        // Afficher plusieurs résultats
+        function displayMultipleResults(guestsList) {
+            const display = guestsList.slice(0, 5);
+            
+            let items = '';
+            display.forEach(g => {
+                items += `
+                    <div class="guest-suggestion-item flex justify-between items-center" onclick='selectGuest(${JSON.stringify(g).replace(/'/g, "\\'")})'>
+                        <div>
+                            <span class="font-semibold text-sm">${g.prenom} ${g.nom}</span>
+                            <span class="text-xs text-gray-500 ml-2">Table ${g.table}</span>
+                        </div>
+                        <i class="fas fa-chevron-right text-gold text-xs"></i>
+                    </div>
+                `;
+            });
+            
+            const html = `
+                <div class="bg-white border border-gold-light rounded-xl overflow-hidden">
+                    <div class="bg-gold-pale p-3 border-b border-gold-light">
+                        <h3 class="heading-font font-bold gold-text text-sm">
+                            <i class="fas fa-users mr-1"></i>
+                            ${guestsList.length} invités trouvés
+                        </h3>
+                    </div>
+                    <div class="max-h-60 overflow-y-auto">${items}</div>
+                </div>
+            `;
+            
+            searchResult.innerHTML = html;
+            searchResult.classList.remove('hidden');
+        }
+
+        function selectGuest(guest) {
+            displayGuestResult(guest);
+            searchInput.value = `${guest.prenom} ${guest.nom}`.trim();
+        }
+
+        function showError(message) {
+            errorText && (errorText.textContent = message);
+            errorMessage && errorMessage.classList.remove('hidden');
+        }
+
+        // ===== FONCTIONS DE GESTION DES INVITÉS =====
+        
         // Marquer entrée
         function marquerEntree(guestId) {
             const guest = guests.find(g => g.id === guestId);
@@ -1318,259 +1597,14 @@
             entryTimeline.innerHTML = html;
         }
 
-        // Normalisation pour la recherche
-        function normalizeString(str) {
-            if (!str) return '';
-            return str.toLowerCase()
-                .normalize('NFD')
-                .replace(/[\u0300-\u036f]/g, '')
-                .replace(/[-\s]+/g, ' ')
-                .replace(/[^\w\s]/g, '')
-                .trim();
-        }
-
-        // Recherche approximative
-        function isApproximateMatch(str1, str2) {
-            if (!str1 || !str2 || str1.length < 3 || str2.length < 3) return false;
-            
-            const maxDist = 2;
-            if (Math.abs(str1.length - str2.length) > maxDist) return false;
-            
-            let dist = 0;
-            const minLen = Math.min(str1.length, str2.length);
-            
-            for (let i = 0; i < minLen; i++) {
-                if (str1[i] !== str2[i]) dist++;
-                if (dist > maxDist) return false;
-            }
-            
-            return dist + Math.abs(str1.length - str2.length) <= maxDist;
-        }
-
-        // Recherche principale
-       function searchGuest() {
-    const searchTerm = searchInput.value.trim();
-    
-    // Masquer les résultats précédents
-    searchResult.classList.add('hidden');
-    errorMessage.classList.add('hidden');
-    
-    if (!searchTerm) {
-        showError("Veuillez entrer un nom ou prénom pour la recherche.");
-        return;
-    }
-    
-    // Normaliser le terme de recherche (enlever accents, espaces multiples, mettre en minuscule)
-    const normalizedSearchTerm = normalizeString(searchTerm);
-    
-    // Recherche avec plusieurs algorithmes de correspondance
-    const foundGuests = guests.filter(guest => {
-        // Créer différentes versions du nom de l'invité pour la comparaison
-        const guestFullName = `${guest.prenom} ${guest.nom}`.trim();
-        const guestReverseName = `${guest.nom} ${guest.prenom}`.trim();
-        const guestNomOnly = guest.nom;
-        const guestPrenomOnly = guest.prenom;
-        
-        // Normaliser toutes les versions
-        const normalizedFullName = normalizeString(guestFullName);
-        const normalizedReverseName = normalizeString(guestReverseName);
-        const normalizedNom = normalizeString(guestNomOnly);
-        const normalizedPrenom = normalizeString(guestPrenomOnly);
-        
-        // 1. Correspondance exacte (après normalisation)
-        if (normalizedFullName === normalizedSearchTerm || 
-            normalizedReverseName === normalizedSearchTerm) {
-            return true;
-        }
-        
-        // 2. Le terme de recherche est contenu dans le nom complet
-        if (normalizedFullName.includes(normalizedSearchTerm) || 
-            normalizedReverseName.includes(normalizedSearchTerm)) {
-            return true;
-        }
-        
-        // 3. Le nom ou prénom correspond exactement
-        if (normalizedNom === normalizedSearchTerm || 
-            normalizedPrenom === normalizedSearchTerm) {
-            return true;
-        }
-        
-        // 4. Le nom ou prénom contient le terme de recherche
-        if (normalizedNom.includes(normalizedSearchTerm) || 
-            normalizedPrenom.includes(normalizedSearchTerm)) {
-            return true;
-        }
-        
-        // 5. Recherche approximative (tolérance aux fautes de frappe)
-        // Utile pour les noms mal orthographiés
-        if (isApproximateMatch(normalizedNom, normalizedSearchTerm) || 
-            isApproximateMatch(normalizedPrenom, normalizedSearchTerm)) {
-            return true;
-        }
-        
-        // 6. Le terme de recherche contient le nom (cas où l'utilisateur tape plus que le nom)
-        if (normalizedSearchTerm.includes(normalizedNom) && normalizedNom.length > 3) {
-            return true;
-        }
-        
-        return false;
-    });
-    
-    if (foundGuests.length > 0) {
-        if (foundGuests.length === 1) {
-            // Un seul invité trouvé
-            displayGuestResult(foundGuests[0]);
-        } else {
-            // Plusieurs invités trouvés - afficher une liste de choix
-            displayMultipleGuestsResults(foundGuests);
-        }
-    } else {
-        // Aucun résultat - suggestions
-        showErrorWithSuggestions(searchTerm);
-    }
-}
-
-        // Afficher résultat unique
-        function displayGuestResult(guest) {
-            const statusClass = guest.estEntré ? 'status-entered' : 'status-absent';
-            const statusText = guest.estEntré ? 'Déjà entré' : 'Pas encore entré';
-            const statusIcon = guest.estEntré ? 'fa-check-circle' : 'fa-hourglass-half';
-            
-            const html = `
-                <div class="bg-white rounded-xl p-4 sm:p-5 shadow-lg border ${guest.estEntré ? 'border-blue-200' : 'border-yellow-200'}">
-                    <div class="flex flex-col sm:flex-row items-center gap-4 sm:gap-5">
-                        <div class="flex items-center gap-3 sm:gap-4 w-full sm:w-auto">
-                            <div class="w-12 h-12 sm:w-14 sm:h-14 ${guest.estEntré ? 'bg-blue-100' : 'bg-yellow-100'} rounded-full flex items-center justify-center flex-shrink-0">
-                                <i class="fas ${guest.estEntré ? 'fa-check-circle text-blue-600' : 'fa-user text-yellow-600'} text-lg sm:text-xl"></i>
-                            </div>
-                            <div>
-                                <h3 class="heading-font text-base sm:text-lg font-bold">${guest.prenom} ${guest.nom}</h3>
-                                <div class="flex flex-wrap items-center gap-2 mt-1">
-                                    <span class="status-badge ${statusClass} text-xs">
-                                        <i class="fas ${statusIcon}"></i>
-                                        ${statusText}
-                                    </span>
-                                    <span class="text-gold text-xs flex items-center gap-1">
-                                        <i class="fas fa-chair"></i>
-                                        Table ${guest.table}
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        ${!guest.estEntré ? `
-                            <button onclick="marquerEntree(${guest.id})" 
-                                    class="btn-gold px-4 sm:px-5 py-2 rounded-lg text-sm font-semibold w-full sm:w-auto">
-                                <i class="fas fa-sign-in-alt mr-1 sm:mr-2"></i>
-                                Marquer entrée
-                            </button>
-                        ` : `
-                            <button disabled class="px-4 sm:px-5 py-2 bg-gray-100 text-gray-400 rounded-lg text-sm cursor-not-allowed w-full sm:w-auto">
-                                <i class="fas fa-check-circle mr-1 sm:mr-2"></i>
-                                Déjà entré
-                            </button>
-                        `}
-                    </div>
-                </div>
-            `;
-            
-            searchResult.innerHTML = html;
-            searchResult.classList.remove('hidden');
-        }
-
-        // Afficher plusieurs résultats
-        function displayMultipleResults(guestsList) {
-            const display = guestsList.slice(0, 5);
-            
-            let items = '';
-            display.forEach(g => {
-                items += `
-                    <div class="guest-suggestion-item flex justify-between items-center" onclick='selectGuest(${JSON.stringify(g)})'>
-                        <div>
-                            <span class="font-semibold text-sm">${g.prenom} ${g.nom}</span>
-                            <span class="text-xs text-gray-500 ml-2">Table ${g.table}</span>
-                        </div>
-                        <i class="fas fa-chevron-right text-gold text-xs"></i>
-                    </div>
-                `;
-            });
-            
-            const html = `
-                <div class="bg-white border border-gold-light rounded-xl overflow-hidden">
-                    <div class="bg-gold-pale p-3 border-b border-gold-light">
-                        <h3 class="heading-font font-bold gold-text text-sm">
-                            <i class="fas fa-users mr-1"></i>
-                            ${guestsList.length} invités trouvés
-                        </h3>
-                    </div>
-                    <div class="max-h-60 overflow-y-auto">${items}</div>
-                </div>
-            `;
-            
-            searchResult.innerHTML = html;
-            searchResult.classList.remove('hidden');
-        }
-
-        function selectGuest(guest) {
-            displayGuestResult(guest);
-            searchInput.value = `${guest.prenom} ${guest.nom}`.trim();
-        }
-
-        function showError(message) {
-            errorText && (errorText.textContent = message);
-            errorMessage && errorMessage.classList.remove('hidden');
-        }
-
-        function showErrorWithSuggestions(term) {
-            const norm = normalizeString(term);
-            
-            const suggestions = guests
-                .map(g => ({ g, score: normalizeString(`${g.prenom} ${g.nom}`).includes(norm) ? 10 : 0 }))
-                .filter(s => s.score > 0)
-                .slice(0, 3)
-                .map(s => s.g);
-            
-            let suggHtml = '';
-            if (suggestions.length) {
-                suggHtml = `
-                    <div class="mt-3">
-                        <p class="text-xs font-medium text-gray-600 mb-2">Suggestions :</p>
-                        <div class="flex flex-wrap gap-1">
-                            ${suggestions.map(g => `
-                                <button onclick="suggestedSearch('${g.prenom} ${g.nom}')"
-                                        class="px-2 py-1 bg-white border border-gold-light rounded-full text-xs hover:bg-gold-pale">
-                                    ${g.prenom} ${g.nom}
-                                </button>
-                            `).join('')}
-                        </div>
-                    </div>
-                `;
-            }
-            
-            errorMessage.innerHTML = `
-                <div class="text-center p-4">
-                    <i class="fas fa-user-slash text-3xl text-red-300 mb-2"></i>
-                    <p class="text-red-600 text-sm mb-2">"${term}" non trouvé</p>
-                    <p class="text-xs text-red-500">Vérifiez l'orthographe</p>
-                    ${suggHtml}
-                </div>
-            `;
-            errorMessage.classList.remove('hidden');
-        }
-
-        function suggestedSearch(name) {
-            searchInput.value = name;
-            searchGuest();
-        }
-
-        // Afficher la liste des invités
+        // Afficher la liste des invités (SANS la colonne Table)
         function renderGuestList() {
             if (!guestList) return;
             
             const sorted = [...guests].sort((a, b) => a.nom.localeCompare(b.nom));
             
             if (sorted.length === 0) {
-                guestList.innerHTML = `<tr><td colspan="5" class="p-4 text-center text-gray-400 text-sm">Aucun invité</td></tr>`;
+                guestList.innerHTML = `<tr><td colspan="4" class="p-4 text-center text-gray-400 text-sm">Aucun invité</td></tr>`;
                 return;
             }
             
@@ -1584,20 +1618,6 @@
                     <tr>
                         <td class="font-medium">${g.nom}</td>
                         <td>${g.prenom}</td>
-                        <td><span class="table-badge">${g.table}</span></td>
-                        <td><span class="status-badge ${statusClass}"><i class="fas ${statusIcon}"></i>${statusText}</span></td>
-                        <td>
-                            ${!g.estEntré ? `
-                                <button onclick="marquerEntree(${g.id})" class="text-green-600 hover:text-green-800 p-1" title="Marquer entrée">
-                                    <i class="fas fa-sign-in-alt"></i>
-                                </button>
-                            ` : `
-                                <span class="text-gray-400 p-1"><i class="fas fa-check-circle"></i></span>
-                            `}
-                            <button onclick="deleteGuest(${g.id})" class="text-red-500 hover:text-red-700 p-1 ml-1" title="Supprimer">
-                                <i class="fas fa-trash-alt"></i>
-                            </button>
-                        </td>
                     </tr>
                 `;
             });
@@ -1614,7 +1634,7 @@
                 updateStatistics();
                 updateTimeline();
             }
-    }
+        }
 
         // Ajouter invité
         function addGuest() {
@@ -1682,7 +1702,7 @@
                     <h1>Mariage - 22 Février 2025</h1>
                     <p>Total: ${total} | Présents: ${entered}</p>
                     <table>
-                        <tr><th>Nom</th><th>Prénom</th><th>Table</th><th>Statut</th></tr>
+                        <tr><th>Nom</th><th>Prénom</th><th>Table</th></tr>
             `;
             
             guests.sort((a,b) => a.nom.localeCompare(b.nom)).forEach(g => {
@@ -1726,7 +1746,7 @@
             window.URL.revokeObjectURL(url);
         }
 
-        // Authentification
+        // ===== AUTHENTIFICATION =====
         function showAuthModal() {
             authModal.classList.remove('hidden');
             usernameInput.focus();
@@ -1770,7 +1790,7 @@
             errorMessage.classList.add('hidden');
         }
 
-        // Animations scroll
+        // ===== ANIMATIONS SCROLL =====
         function revealElements() {
             document.querySelectorAll('.reveal, .reveal-left, .reveal-right').forEach(el => {
                 const rect = el.getBoundingClientRect();
@@ -1778,7 +1798,7 @@
             });
         }
 
-        // Event listeners
+        // ===== EVENT LISTENERS =====
         window.addEventListener('load', () => {
             renderGuestList();
             updateStatistics();
@@ -1801,13 +1821,28 @@
         });
         
         searchButton.addEventListener('click', searchGuest);
-        searchInput.addEventListener('keyup', (e) => e.key === 'Enter' && searchGuest());
+        searchInput.addEventListener('keyup', (e) => {
+            if (e.key === 'Enter') {
+                searchGuest();
+            } else {
+                showSuggestions(); // Afficher les suggestions en temps réel
+            }
+        });
+        
+        // Cacher les suggestions quand on clique ailleurs
+        document.addEventListener('click', (e) => {
+            if (!searchInput.contains(e.target) && !suggestionsContainer.contains(e.target)) {
+                suggestionsContainer.classList.add('hidden');
+            }
+        });
         
         logoutBtn.addEventListener('click', logout);
         addGuestButton.addEventListener('click', addGuest);
 
         window.marquerEntree = marquerEntree;
         window.deleteGuest = deleteGuest;
+        window.selectSuggestion = selectSuggestion;
+        window.selectGuest = selectGuest;
 
         window.addEventListener('click', (e) => e.target === authModal && hideAuthModal());
 
@@ -1821,4 +1856,3 @@
     </script>
 </body>
 </html>
-
