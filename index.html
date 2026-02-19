@@ -313,7 +313,7 @@
             }
         }
         
-        /* ===== TABLEAU DES INVITÉS - VERSION OPTIMISÉE SANS COLONNE TABLE ===== */
+        /* ===== TABLEAU DES INVITÉS - VERSION OPTIMISÉE ===== */
         .table-wrapper {
             width: 100%;
             overflow-x: auto;
@@ -325,7 +325,7 @@
         }
         
         .guest-table {
-            min-width: 500px;
+            min-width: 400px;
             width: 100%;
             border-collapse: collapse;
             background: white;
@@ -1182,7 +1182,73 @@
             { id: 104, nom: "Diac Honorine", prenom: "", table: "21", estEntré: false, heureEntrée: null },
             { id: 105, nom: "Diac Virginy", prenom: "", table: "21", estEntré: false, heureEntrée: null },
             { id: 106, nom: "Bikandou Roger", prenom: "Couple", table: "21", estEntré: false, heureEntrée: null },
-            { id: 107, nom: "Maman José", prenom: "", table: "Église", estEntré: false, heureEntrée: null }
+            { id: 107, nom: "Maman José", prenom: "", table: "Église", estEntré: false, heureEntrée: null },
+            { id: 108, nom: "Lisa", prenom: "", table: 2, estEntré: false, heureEntrée: null },
+            { id: 109, nom: "PANDI", prenom: "Dieu-Merci", table: 2, estEntré: false, heureEntrée: null },
+            { id: 110, nom: "M.", prenom: "Natasha", table: 2, estEntré: false, heureEntrée: null },
+            { id: 111, nom: "Dalia", prenom: "", table: 2, estEntré: false, heureEntrée: null },
+            { id: 112, nom: "MANISKA", prenom: "", table: 2, estEntré: false, heureEntrée: null },
+            { id: 113, nom: "Tesnar", prenom: "", table: 2, estEntré: false, heureEntrée: null },
+            { id: 114, nom: "TONTON", prenom: "", table: 2, estEntré: false, heureEntrée: null },
+            { id: 115, nom: "Moisesse", prenom: "", table: 2, estEntré: false, heureEntrée: null },
+            { id: 116, nom: "Claude", prenom: "", table: 2, estEntré: false, heureEntrée: null },
+            { id: 117, nom: "Rachi", prenom: "", table: 2, estEntré: false, heureEntrée: null },
+            { id: 118, nom: "Emaflo", prenom: "", table: 2, estEntré: false, heureEntrée: null },
+            { id: 119, nom: "BANZOUZI", prenom: "Exaucée", table: 4, estEntré: false, heureEntrée: null },
+            { id: 120, nom: "BISSOBOLO", prenom: "Exaucée", table: 4, estEntré: false, heureEntrée: null },
+            { id: 121, nom: "MAHOUNGOU", prenom: "Chrisnel", table: 4, estEntré: false, heureEntrée: null },
+            { id: 122, nom: "MaWErtinez", prenom: "", table: 4, estEntré: false, heureEntrée: null },
+            { id: 123, nom: "ZOLA", prenom: "Percy", table: 4, estEntré: false, heureEntrée: null },
+            { id: 124, nom: "Prudence", prenom: "", table: 4, estEntré: false, heureEntrée: null },
+            { id: 125, nom: "M.", prenom: "Sylvie", table: 4, estEntré: false, heureEntrée: null },
+            { id: 126, nom: "KIMPALA", prenom: "Sorimine", table: 4, estEntré: false, heureEntrée: null },
+            { id: 127, nom: "KIMFOKO", prenom: "Ornella", table: 4, estEntré: false, heureEntrée: null },
+            { id: 128, nom: "Milas", prenom: "", table: 4, estEntré: false, heureEntrée: null },
+            { id: 129, nom: "Préfina", prenom: "", table: 4, estEntré: false, heureEntrée: null },
+            { id: 130, nom: "Tsimba", prenom: "", table: 4, estEntré: false, heureEntrée: null },
+            { id: 131, nom: "Chancelvie", prenom: "", table: 4, estEntré: false, heureEntrée: null },
+            { id: 132, nom: "Pauprince", prenom: "", table: 4, estEntré: false, heureEntrée: null },
+            { id: 133, nom: "Jonas", prenom: "", table: 4, estEntré: false, heureEntrée: null },
+            { id: 134, nom: "Yvan", prenom: "", table: 4, estEntré: false, heureEntrée: null },
+            { id: 135, nom: "BOUEYA", prenom: "Ange", table: 6, estEntré: false, heureEntrée: null },
+            { id: 136, nom: "BOUEYA", prenom: "Ange", table: 6, estEntré: false, heureEntrée: null },
+            { id: 137, nom: "BANZOUZI", prenom: "Ange", table: 6, estEntré: false, heureEntrée: null },
+            { id: 138, nom: "Elvina", prenom: "", table: 6, estEntré: false, heureEntrée: null },
+            { id: 139, nom: "MOUKOKO", prenom: "Aubin", table: 6, estEntré: false, heureEntrée: null },
+            { id: 140, nom: "MANIONGUI", prenom: "Edresse", table: 6, estEntré: false, heureEntrée: null },
+            { id: 141, nom: "MISSEMOU", prenom: "Raddy", table: 6, estEntré: false, heureEntrée: null },
+            { id: 142, nom: "KIENGO", prenom: "Ermite", table: 6, estEntré: false, heureEntrée: null },
+            { id: 143, nom: "MBAMA", prenom: "Osée", table: 6, estEntré: false, heureEntrée: null },
+            { id: 144, nom: "KIBONZI", prenom: "Daniel", table: 6, estEntré: false, heureEntrée: null },
+            { id: 145, nom: "DEGOMA", prenom: "", table: 6, estEntré: false, heureEntrée: null },
+            { id: 146, nom: "TCHIBINDA", prenom: "Rotch", table: 6, estEntré: false, heureEntrée: null },
+            { id: 147, nom: "MOULOLO", prenom: "Chancel", table: 6, estEntré: false, heureEntrée: null },
+            { id: 148, nom: "NGOMA", prenom: "Eder", table: 6, estEntré: false, heureEntrée: null },
+            { id: 149, nom: "NGOMA", prenom: "Surya", table: 6, estEntré: false, heureEntrée: null },
+            { id: 150, nom: "Vidiane", prenom: "", table: 6, estEntré: false, heureEntrée: null },
+            { id: 151, nom: "Varlin", prenom: "", table: 6, estEntré: false, heureEntrée: null },
+            { id: 152, nom: "Salon", prenom: "", table: 6, estEntré: false, heureEntrée: null },
+            { id: 153, nom: "MFOUTOU", prenom: "Aubin (Couple)", table: 8, estEntré: false, heureEntrée: null },
+            { id: 154, nom: "MASSOUMOU", prenom: "Omer (Couple)", table: 8, estEntré: false, heureEntrée: null },
+            { id: 155, nom: "NIAMA", prenom: "Félix (Couple)", table: 8, estEntré: false, heureEntrée: null },
+            { id: 156, nom: "MAMBOUKOU", prenom: "Couple", table: 8, estEntré: false, heureEntrée: null },
+            { id: 157, nom: "MABONZO", prenom: "Prince (Couple)", table: 8, estEntré: false, heureEntrée: null },
+            { id: 158, nom: "NGOMA", prenom: "Auguste (Couple)", table: 8, estEntré: false, heureEntrée: null },
+            { id: 159, nom: "MOUNGABA", prenom: "Couple", table: 8, estEntré: false, heureEntrée: null },
+            { id: 160, nom: "NGOMA", prenom: "Franck (Couple)", table: 8, estEntré: false, heureEntrée: null },
+            { id: 161, nom: "NGOMA", prenom: "Fresnel (Couple)", table: 8, estEntré: false, heureEntrée: null },
+            { id: 162, nom: "GOMA", prenom: "Dady (Couple)", table: 8, estEntré: false, heureEntrée: null },
+            { id: 163, nom: "AKOUNDZE", prenom: "Couple", table: 8, estEntré: false, heureEntrée: null },
+            { id: 164, nom: "TSATOU", prenom: "Charles (Couple)", table: 8, estEntré: false, heureEntrée: null },
+            { id: 165, nom: "YOLO", prenom: "Etienne (Couple)", table: 8, estEntré: false, heureEntrée: null },
+            { id: 166, nom: "MIYALOU", prenom: "Couple", table: 8, estEntré: false, heureEntrée: null },
+            { id: 167, nom: "MAHOUNGOU", prenom: "Jules (Couple)", table: 8, estEntré: false, heureEntrée: null },
+            { id: 168, nom: "MOUANDA", prenom: "Jean", table: 10, estEntré: false, heureEntrée: null },
+            { id: 169, nom: "Maman", prenom: "Chantal", table: 10, estEntré: false, heureEntrée: null },
+            { id: 170, nom: "PANDI", prenom: "Chatie", table: 10, estEntré: false, heureEntrée: null },
+            { id: 171, nom: "Alfred", prenom: "", table: 10, estEntré: false, heureEntrée: null },
+            { id: 172, nom: "Brudey", prenom: "", table: 10, estEntré: false, heureEntrée: null },
+            { id: 173, nom: "Asso", prenom: "", table: 10, estEntré: false, heureEntrée: null }
         ];
 
         // Historique des entrées
@@ -1251,13 +1317,13 @@
             if (!str) return '';
             return str.toLowerCase()
                 .normalize('NFD')
-                .replace(/[\u0300-\u036f]/g, '') // Supprime les accents
-                .replace(/[-\s]+/g, ' ')         // Remplace les tirets et espaces multiples par un espace
-                .replace(/[^\w\s]/g, '')          // Supprime la ponctuation
+                .replace(/[\u0300-\u036f]/g, '')
+                .replace(/[-\s]+/g, ' ')
+                .replace(/[^\w\s]/g, '')
                 .trim();
         }
 
-        // Calcul de similarité (algorithme simple mais efficace)
+        // Calcul de similarité
         function calculateSimilarity(str1, str2) {
             if (!str1 || !str2) return 0;
             
@@ -1267,7 +1333,6 @@
             if (s1 === s2) return 100;
             if (s1.includes(s2) || s2.includes(s1)) return 80;
             
-            // Compte les caractères communs
             let common = 0;
             const set1 = new Set(s1.split(''));
             const set2 = new Set(s2.split(''));
@@ -1280,13 +1345,12 @@
             return maxLength > 0 ? Math.round((common / maxLength) * 50) : 0;
         }
 
-        // Recherche de suggestions en temps réel
+        // Recherche de suggestions
         function getSuggestions(searchTerm) {
             if (!searchTerm || searchTerm.length < 2) return [];
             
             const normalizedTerm = normalizeString(searchTerm);
             
-            // Calculer un score pour chaque invité
             const scored = guests.map(guest => {
                 const fullName = `${guest.prenom} ${guest.nom}`.trim();
                 const fullNameReverse = `${guest.nom} ${guest.prenom}`.trim();
@@ -1303,7 +1367,6 @@
                 return { guest, score: maxScore };
             });
             
-            // Filtrer et trier par score
             return scored
                 .filter(item => item.score > 30)
                 .sort((a, b) => b.score - a.score)
@@ -1323,17 +1386,6 @@
             
             let html = '';
             suggestions.forEach(guest => {
-                const fullName = `${guest.prenom} ${guest.nom}`.trim();
-                const term = normalizeString(searchTerm);
-                const normalizedFullName = normalizeString(fullName);
-                
-                // Mettre en évidence la partie correspondante
-                let displayName = fullName;
-                if (term.length > 0 && normalizedFullName.includes(term)) {
-                    // Simple highlight (on peut améliorer)
-                    displayName = fullName;
-                }
-                
                 html += `
                     <div class="suggestion-item flex justify-between items-center" onclick="selectSuggestion('${guest.prenom}', '${guest.nom}')">
                         <div>
@@ -1353,14 +1405,13 @@
         function selectSuggestion(prenom, nom) {
             searchInput.value = `${prenom} ${nom}`.trim();
             suggestionsContainer.classList.add('hidden');
-            searchGuest(); // Lancer directement la recherche
+            searchGuest();
         }
 
-        // Recherche principale (améliorée)
+        // Recherche principale
         function searchGuest() {
             const searchTerm = searchInput.value.trim();
             
-            // Masquer les résultats précédents
             searchResult.classList.add('hidden');
             errorMessage.classList.add('hidden');
             suggestionsContainer.classList.add('hidden');
@@ -1372,7 +1423,6 @@
             
             const normalizedSearchTerm = normalizeString(searchTerm);
             
-            // Recherche avec scores
             const foundGuests = guests.filter(guest => {
                 const fullName = `${guest.prenom} ${guest.nom}`.trim();
                 const reverseName = `${guest.nom} ${guest.prenom}`.trim();
@@ -1399,12 +1449,11 @@
                     displayMultipleResults(foundGuests);
                 }
             } else {
-                // Aucun résultat - suggestions améliorées
                 showIntelligentSuggestions(searchTerm);
             }
         }
 
-        // Suggestions intelligentes quand aucun résultat
+        // Suggestions intelligentes
         function showIntelligentSuggestions(searchTerm) {
             const suggestions = getSuggestions(searchTerm);
             
@@ -1597,23 +1646,19 @@
             entryTimeline.innerHTML = html;
         }
 
-        // Afficher la liste des invités (SANS la colonne Table)
+        // Afficher la liste des invités
         function renderGuestList() {
             if (!guestList) return;
             
             const sorted = [...guests].sort((a, b) => a.nom.localeCompare(b.nom));
             
             if (sorted.length === 0) {
-                guestList.innerHTML = `<tr><td colspan="4" class="p-4 text-center text-gray-400 text-sm">Aucun invité</td></tr>`;
+                guestList.innerHTML = `<tr><td colspan="2" class="p-4 text-center text-gray-400 text-sm">Aucun invité</td></tr>`;
                 return;
             }
             
             let html = '';
             sorted.forEach(g => {
-                const statusClass = g.estEntré ? 'status-present' : 'status-absent';
-                const statusText = g.estEntré ? 'Présent' : 'Absent';
-                const statusIcon = g.estEntré ? 'fa-check-circle' : 'fa-hourglass-half';
-                
                 html += `
                     <tr>
                         <td class="font-medium">${g.nom}</td>
@@ -1623,17 +1668,6 @@
             });
             
             guestList.innerHTML = html;
-        }
-
-        // Supprimer invité
-        function deleteGuest(id) {
-            if (confirm("Supprimer cet invité ?")) {
-                guests = guests.filter(g => g.id !== id);
-                entryHistory = entryHistory.filter(e => e.id !== id);
-                renderGuestList();
-                updateStatistics();
-                updateTimeline();
-            }
         }
 
         // Ajouter invité
@@ -1702,7 +1736,7 @@
                     <h1>Mariage - 22 Février 2025</h1>
                     <p>Total: ${total} | Présents: ${entered}</p>
                     <table>
-                        <tr><th>Nom</th><th>Prénom</th><th>Table</th></tr>
+                        <tr><th>Nom</th><th>Prénom</th><th>Table</th><th>Statut</th></tr>
             `;
             
             guests.sort((a,b) => a.nom.localeCompare(b.nom)).forEach(g => {
@@ -1825,11 +1859,10 @@
             if (e.key === 'Enter') {
                 searchGuest();
             } else {
-                showSuggestions(); // Afficher les suggestions en temps réel
+                showSuggestions();
             }
         });
         
-        // Cacher les suggestions quand on clique ailleurs
         document.addEventListener('click', (e) => {
             if (!searchInput.contains(e.target) && !suggestionsContainer.contains(e.target)) {
                 suggestionsContainer.classList.add('hidden');
